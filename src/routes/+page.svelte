@@ -8,7 +8,6 @@
 			v.text().then((txt) => {
 				console.log(Parser(txt));
 			});
-			//do something here
 		});
 	}
 </script>

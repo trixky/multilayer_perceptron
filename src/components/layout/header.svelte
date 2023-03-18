@@ -11,6 +11,6 @@
 <!-- ======================================== STYLE -->
 <style lang="postcss">
     header {
-        @apply text-center;
+        @apply text-center py-8;
     }
 </style>

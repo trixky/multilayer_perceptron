@@ -10,7 +10,7 @@
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-    header {
-        @apply text-center;
+    footer {
+        @apply text-center py-5;
     }
 </style>

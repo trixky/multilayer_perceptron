@@ -14,5 +14,8 @@
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-
+    main {
+        @apply flex justify-center p-3 w-fit m-auto;
+        border: solid 1px black;
+    }
 </style>
