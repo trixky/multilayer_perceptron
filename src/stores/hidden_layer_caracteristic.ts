@@ -12,10 +12,13 @@ function new_default_hidden_layer(): HiddenLayerCaracteristicsModel {
 }
 
 function new_default_hidden_layers(): Array<HiddenLayerCaracteristicsModel> {
-    return [
-        new_default_hidden_layer(),
-        new_default_hidden_layer()
-    ]
+    const HiddenLayerCaracteristics = <Array<HiddenLayerCaracteristicsModel>>[]
+
+    for (let i = Config.inputs.hidden_layer.number.default; i > 0; i--) {
+        HiddenLayerCaracteristics.push(new_default_hidden_layer())
+    }
+
+    return HiddenLayerCaracteristics
 }
 
 function create_hidden_layer_caracteristic_store() {
