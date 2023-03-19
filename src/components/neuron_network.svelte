@@ -42,7 +42,7 @@
 </script>
 
 <!-- ======================================== CONTENT -->
-<h2>Hidden layers</h2>
+<h2>Neuron network</h2>
 <div
 	class="hidden-layer-container"
 	style="transform: translateX(-{$HiddenLayerCaracteristicStore.length * 6}px)"

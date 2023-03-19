@@ -1,16 +1,15 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
-
 </script>
 
 <!-- ======================================== CONTENT -->
 <header>
-    <h1>Perceptron</h1>
+	<h1><a href="https://github.com/trixky/perceptron" target="_blank" >Perceptron </a></h1>
 </header>
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-    header {
-        @apply text-center py-8;
-    }
+	header {
+		@apply text-center py-8;
+	}
 </style>
