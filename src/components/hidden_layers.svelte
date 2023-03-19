@@ -5,7 +5,6 @@
 	import config from '../config';
 
 	function handle_run() {
-		console.log('*** handle_run');
 		fetch('/data.csv').then((v) => {
 			v.text().then((txt) => {
 				console.log(Parser(txt));
@@ -122,7 +121,7 @@
 <!-- ======================================== STYLE -->
 <style lang="postcss">
 	h2 {
-		@apply mb-2 text-right opacity-40;
+		@apply text-right;
 	}
 
 	.hidden-layer-container {
