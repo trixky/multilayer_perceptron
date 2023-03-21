@@ -14,7 +14,7 @@ export default {
                 default: 2,
             },
             size: {
-                min: 1,
+                min: 2,
                 max: 60,
                 default: 16
             },

@@ -69,18 +69,9 @@ function create_hidden_layer_caracteristic_store() {
                 return hidden_layers
             })
         },
-        update_layer_size: (size: number, index: number) => {
-            update(hidden_layers => {
-                if (index < hidden_layers.length) {
-                    hidden_layers[index].size = size
-                }
-
-                return hidden_layers
-            })
-        },
         increase_layer_size: (index: number) => {
             update(hidden_layers => {
-                if (index < hidden_layers.length) {
+                if (index < hidden_layers.length && hidden_layers[index].size < Config.inputs.hidden_layers.size.max) {
                     hidden_layers[index].size++
                 }
 
@@ -89,7 +80,7 @@ function create_hidden_layer_caracteristic_store() {
         },
         decrease_layer_size: (index: number) => {
             update(hidden_layers => {
-                if (index < hidden_layers.length) {
+                if (index < hidden_layers.length && hidden_layers[index].size > Config.inputs.hidden_layers.size.min) {
                     hidden_layers[index].size--
                 }
 
