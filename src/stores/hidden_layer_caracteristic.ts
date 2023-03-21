@@ -6,15 +6,15 @@ import Config from '../config'
 
 function new_default_hidden_layer(): HiddenLayerCaracteristicsModel {
     return <HiddenLayerCaracteristicsModel>{
-        size: Config.inputs.hidden_layer.size.default,
-        function: Config.inputs.hidden_layer.function.default
+        size: Config.inputs.hidden_layers.size.default,
+        function: Config.inputs.hidden_layers.function.default
     }
 }
 
 function new_default_hidden_layers(): Array<HiddenLayerCaracteristicsModel> {
     const HiddenLayerCaracteristics = <Array<HiddenLayerCaracteristicsModel>>[]
 
-    for (let i = Config.inputs.hidden_layer.number.default; i > 0; i--) {
+    for (let i = Config.inputs.hidden_layers.number.default; i > 0; i--) {
         HiddenLayerCaracteristics.push(new_default_hidden_layer())
     }
 
@@ -31,7 +31,7 @@ function create_hidden_layer_caracteristic_store() {
         },
         add_layer: (hidden_layer_caracteristics: HiddenLayerCaracteristicsModel) => {
             update(hidden_layers => {
-                if (hidden_layers.length < Config.inputs.hidden_layer.number.max) {
+                if (hidden_layers.length < Config.inputs.hidden_layers.number.max) {
                     hidden_layers.push(hidden_layer_caracteristics)
                 }
 
@@ -40,7 +40,7 @@ function create_hidden_layer_caracteristic_store() {
         },
         add_default_layer: () => {
             update(hidden_layers => {
-                if (hidden_layers.length < Config.inputs.hidden_layer.number.max) {
+                if (hidden_layers.length < Config.inputs.hidden_layers.number.max) {
                     hidden_layers.push(new_default_hidden_layer())
                 }
                 return hidden_layers
@@ -48,7 +48,7 @@ function create_hidden_layer_caracteristic_store() {
         },
         add_last_copy_layer: () => {
             update(hidden_layers => {
-                if (hidden_layers.length < Config.inputs.hidden_layer.number.max) {
+                if (hidden_layers.length < Config.inputs.hidden_layers.number.max) {
                     hidden_layers.push(<HiddenLayerCaracteristicsModel>{
                         size: hidden_layers[hidden_layers.length - 1].size,
                         function: hidden_layers[hidden_layers.length - 1].function
@@ -60,7 +60,7 @@ function create_hidden_layer_caracteristic_store() {
         },
         remove_layer: (index: number) => {
             update(hidden_layers => {
-                if (hidden_layers.length > Config.inputs.hidden_layer.number.min) {
+                if (hidden_layers.length > Config.inputs.hidden_layers.number.min) {
                     if (index < hidden_layers.length) {
                         hidden_layers.splice(index, 1)
                     }
@@ -98,7 +98,7 @@ function create_hidden_layer_caracteristic_store() {
         },
         change_layer_function: (index: number) => {
             update(hidden_layers => {
-                if (index < hidden_layers.length) {
+                if (index < hidden_layers.length && hidden_layers[index].function != null) {
                     const function_index = Object.values(Functions).indexOf(hidden_layers[index].function)
                     const new_function_index = (function_index + 1) % Object.values(Functions).length
 

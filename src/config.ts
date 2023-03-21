@@ -2,7 +2,12 @@ import { Functions } from "./models/hidden_layer"
 
 export default {
     inputs: {
-        hidden_layer: {
+        input_layer: {
+            size: {
+                default: 30
+            }
+        },
+        hidden_layers: {
             number: {
                 min: 2,
                 max: 6,
@@ -16,6 +21,20 @@ export default {
             function: {
                 default: Object.keys(Functions)[Object.values(Functions).indexOf(Functions.sigmoid)]
             }
+        },
+        output_layer: {
+            size: {
+                default: 2
+            }
+        }
+    },
+    visuals: {
+        layers: {
+            dimensions: {
+                width: 400,
+                height: 500
+            },
+            line_width: 0.3,
         }
     }
 }
