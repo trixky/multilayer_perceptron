@@ -8,6 +8,8 @@
 
 	let ctx: any = undefined;
 
+	$: neurons_nbr = $HiddenLayerCaracteristicsStore.reduce((sum, hidden_layer) => sum + hidden_layer.size, 0) + Config.inputs.input_layer.size.default + Config.inputs.output_layer.size.default;
+
 	const input_layer = <HiddenLayerCaracteristicsModel>{
 		size: Config.inputs.input_layer.size.default
 	};
@@ -92,14 +94,25 @@
 </script>
 
 <!-- ======================================== CONTENT -->
-<canvas
-	id="network-canva"
-	width={Config.visuals.layers.dimensions.width}
-	height={Config.visuals.layers.dimensions.height}
-/>
+<div class="visual-container">
+	<p class="neurons-counter">{neurons_nbr} neurons</p>
+	<canvas
+		id="network-canva"
+		width={Config.visuals.layers.dimensions.width}
+		height={Config.visuals.layers.dimensions.height}
+	/>
+</div>
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
+	.visual-container {
+		@apply relative my-2;
+	}
+
+	.neurons-counter {
+		@apply absolute top-0 right-0 p-2 text-sm opacity-40;
+	}
+
 	#network-canva {
 		@apply my-5;
 	}
