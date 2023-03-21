@@ -22,7 +22,7 @@ h1 {
 }
 
 h2 {
-    @apply text-xl mb-2 opacity-40;
+    @apply text-xl opacity-40;
 }
 
 button {

@@ -2,7 +2,7 @@
 <script lang="ts">
 	import Parser from '../logic/parser';
 	import HiddenLayerCaracteristicStore from '../stores/hidden_layer_caracteristic';
-	import VisualLayers from "../components/visual/layers.svelte";
+	import VisualLayers from '../components/visual/layers.svelte';
 	import config from '../config';
 
 	function handle_run() {
@@ -30,100 +30,119 @@
 	}
 
 	function handle_change_function(index: number) {
-		HiddenLayerCaracteristicStore.change_layer_function(index)
+		HiddenLayerCaracteristicStore.change_layer_function(index);
 	}
 
 	function handle_move_up(index: number) {
-		HiddenLayerCaracteristicStore.move_up_layer(index)
+		HiddenLayerCaracteristicStore.move_up_layer(index);
 	}
 
 	function handle_move_down(index: number) {
-		HiddenLayerCaracteristicStore.move_down_layer(index)
+		HiddenLayerCaracteristicStore.move_down_layer(index);
+	}
+
+	function handle_randomize() {
+		HiddenLayerCaracteristicStore.randomize();
 	}
 </script>
 
 <!-- ======================================== CONTENT -->
-<h2>Neuron network</h2>
-<div
-	class="hidden-layer-container"
-	style="transform: translateX(-{$HiddenLayerCaracteristicStore.length * 6}px)"
->
-	{#each $HiddenLayerCaracteristicStore as hidden_layer_caracteristic, hidden_layer_caracteristic_index (hidden_layer_caracteristic_index)}
-		{@const first = hidden_layer_caracteristic_index == 0}
-		{@const last = hidden_layer_caracteristic_index == $HiddenLayerCaracteristicStore.length - 1}
-		<div
-			class="hidden-layer"
-			style="transform: translateX({hidden_layer_caracteristic_index * 12}px)"
-		>
-			<div class="hidden-layer-caracteristic">
-				<p class="hidden-layer-caracteristic-label">layer {hidden_layer_caracteristic_index + 1}</p>
-				<div class="hidden-layer-caracteristic-input">
-					<p class="size">{hidden_layer_caracteristic.size}</p>
-					<div class="hidden-layer-caracteristic-input-modificator">
-						<button
-							class="icon-button modificator-button"
-							on:click={() => handle_increase_size(hidden_layer_caracteristic_index)}
-						>
-							<img class="icon" src="/icons/plus.svg" alt="plus" />
-						</button>
-						<button
-							class="icon-button modificator-button"
-							on:click={() => handle_decrease_size(hidden_layer_caracteristic_index)}
-						>
-							<img class="icon" src="/icons/minus.svg" alt="minus" />
-						</button>
-					</div>
-				</div>
-				<div class="hidden-layer-caracteristic-input">
-					<p class="function">{hidden_layer_caracteristic.function}</p>
-					<div class="hidden-layer-caracteristic-input-modificator">
-						<button class="icon-button modificator-button" on:click={() => {handle_change_function(hidden_layer_caracteristic_index)}}>
-							<img class="icon" src="/icons/refresh.svg" alt="change" />
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="hidden-layer-management">
-				<button
-					class="icon-button"
-					disabled={first}
-					on:click={() => handle_move_up(hidden_layer_caracteristic_index)}
-				>
-					<img class="icon" src="/icons/arrow.svg" style="transform: scaleY(-1);" alt="up" />
-				</button>
-				<button
-					class="icon-button"
-					disabled={last}
-					on:click={() => handle_move_down(hidden_layer_caracteristic_index)}
-				>
-					<img class="icon" src="/icons/arrow.svg" alt="down" />
-				</button>
-				<button
-					class="icon-button"
-					disabled={(first && last) || $HiddenLayerCaracteristicStore.length <= config.inputs.hidden_layers.number.min}
-					on:click={() => handle_remove_layer(hidden_layer_caracteristic_index)}
-				>
-					<img class="icon" src="/icons/remove.svg" alt="remove" />
-				</button>
-			</div>
-		</div>
-	{/each}
-	<button
-		on:click={handle_add_layer}
-		disabled={$HiddenLayerCaracteristicStore.length >= config.inputs.hidden_layers.number.max}
-		class="add-layer-button"
-		style="margin-left: {$HiddenLayerCaracteristicStore.length * 12}px;"
+<div class="neuron-network-container">
+	<header>
+		<h2>Neuron network</h2>
+		<button on:click={handle_randomize} class="random-button">Randomize</button>
+	</header>
+	<div
+		class="hidden-layer-container"
+		style="transform: translateX(-{$HiddenLayerCaracteristicStore.length * 6}px)"
 	>
-		Add layer
-	</button>
+		{#each $HiddenLayerCaracteristicStore as hidden_layer_caracteristic, hidden_layer_caracteristic_index (hidden_layer_caracteristic_index)}
+			{@const first = hidden_layer_caracteristic_index == 0}
+			{@const last = hidden_layer_caracteristic_index == $HiddenLayerCaracteristicStore.length - 1}
+			<div
+				class="hidden-layer"
+				style="transform: translateX({hidden_layer_caracteristic_index * 12}px)"
+			>
+				<div class="hidden-layer-caracteristic">
+					<p class="hidden-layer-caracteristic-label">
+						layer {hidden_layer_caracteristic_index + 1}
+					</p>
+					<div class="hidden-layer-caracteristic-input">
+						<p class="size">{hidden_layer_caracteristic.size}</p>
+						<div class="hidden-layer-caracteristic-input-modificator">
+							<button
+								class="icon-button modificator-button"
+								on:click={() => handle_increase_size(hidden_layer_caracteristic_index)}
+							>
+								<img class="icon" src="/icons/plus.svg" alt="plus" />
+							</button>
+							<button
+								class="icon-button modificator-button"
+								on:click={() => handle_decrease_size(hidden_layer_caracteristic_index)}
+							>
+								<img class="icon" src="/icons/minus.svg" alt="minus" />
+							</button>
+						</div>
+					</div>
+					<div class="hidden-layer-caracteristic-input">
+						<p class="function">{hidden_layer_caracteristic.function}</p>
+						<div class="hidden-layer-caracteristic-input-modificator">
+							<button
+								class="icon-button modificator-button"
+								on:click={() => {
+									handle_change_function(hidden_layer_caracteristic_index);
+								}}
+							>
+								<img class="icon" src="/icons/refresh.svg" alt="change" />
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="hidden-layer-management">
+					<button
+						class="icon-button"
+						disabled={first}
+						on:click={() => handle_move_up(hidden_layer_caracteristic_index)}
+					>
+						<img class="icon" src="/icons/arrow.svg" style="transform: scaleY(-1);" alt="up" />
+					</button>
+					<button
+						class="icon-button"
+						disabled={last}
+						on:click={() => handle_move_down(hidden_layer_caracteristic_index)}
+					>
+						<img class="icon" src="/icons/arrow.svg" alt="down" />
+					</button>
+					<button
+						class="icon-button"
+						disabled={(first && last) ||
+							$HiddenLayerCaracteristicStore.length <= config.inputs.hidden_layers.number.min}
+						on:click={() => handle_remove_layer(hidden_layer_caracteristic_index)}
+					>
+						<img class="icon" src="/icons/remove.svg" alt="remove" />
+					</button>
+				</div>
+			</div>
+		{/each}
+		<button
+			on:click={handle_add_layer}
+			disabled={$HiddenLayerCaracteristicStore.length >= config.inputs.hidden_layers.number.max}
+			class="add-layer-button"
+			style="margin-left: {$HiddenLayerCaracteristicStore.length * 12}px;">Add layer</button
+		>
+	</div>
+	<VisualLayers />
+	<button class="run" on:click={handle_run}>run</button>
 </div>
-<VisualLayers />
-<button class="run" on:click={handle_run}>run</button>
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-	h2 {
+	header {
 		@apply text-right;
+	}
+
+	.random-button {
+		@apply -translate-y-[6px] p-0 !important;
 	}
 
 	.hidden-layer-container {
@@ -179,7 +198,7 @@
 	}
 
 	.add-layer-button {
-		@apply flex w-fit pl-[6px] mt-[4px] text-sm opacity-20 transition-opacity duration-150;
+		@apply w-fit pl-[6px] mt-[4px] text-sm opacity-20 transition-opacity duration-150;
 	}
 
 	.add-layer-button:disabled {
@@ -188,6 +207,10 @@
 
 	.add-layer-button:not([disabled]):hover {
 		@apply opacity-100;
+	}
+
+	.random-button {
+		@apply w-fit pr-[6px] mt-[4px] text-sm opacity-20 hover:opacity-100 transition-opacity duration-150;
 	}
 
 	.icon {

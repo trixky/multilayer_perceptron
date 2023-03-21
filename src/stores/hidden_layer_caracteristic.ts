@@ -131,6 +131,37 @@ function create_hidden_layer_caracteristic_store() {
                 }
                 return hidden_layers
             })
+        },
+        randomize: () => {
+            const random_hidden_layers: Array<HiddenLayerCaracteristicsModel> = []
+
+            // Find a random layer number
+            let random_hidden_layer_nbr = Math.ceil(Math.random() * (Config.inputs.hidden_layers.number.max - Config.inputs.hidden_layers.number.min)) + Config.inputs.hidden_layers.number.min;
+
+            // random layer number clamper
+            if (random_hidden_layer_nbr > Config.inputs.hidden_layers.number.random.clamper.threshold && Math.floor(Math.random() * Config.inputs.hidden_layers.number.random.clamper.luck) != 0) {
+                random_hidden_layer_nbr -= Config.inputs.hidden_layers.number.random.clamper.cut
+            }
+
+            for (let i = 0; i < random_hidden_layer_nbr; i++) {
+                // Find a random function
+                const random_function = Object.values(Functions)[(Math.floor(Math.random() * Object.keys(Functions).length))];
+
+                // Find a random layer size
+                let random_size = Math.ceil(Math.random() * (Config.inputs.hidden_layers.size.max - Config.inputs.hidden_layers.size.min)) + Config.inputs.hidden_layers.size.min;
+
+                // random layer size clamper
+                if (random_size > Config.inputs.hidden_layers.size.random.clamper.threshold && Math.floor(Math.random() * Config.inputs.hidden_layers.size.random.clamper.luck) != 0) {
+                    random_size -= Config.inputs.hidden_layers.size.random.clamper.cut
+                }
+
+                random_hidden_layers.push(<HiddenLayerCaracteristicsModel>{
+                    function: random_function,
+                    size: random_size
+                })
+            }
+
+            set(random_hidden_layers)
         }
     };
 }
