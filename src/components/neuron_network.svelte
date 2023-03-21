@@ -1,17 +1,7 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
-	import Parser from '../logic/parser';
 	import HiddenLayerCaracteristicStore from '../stores/hidden_layer_caracteristic';
-	import VisualLayers from '../components/visual/layers.svelte';
-	import config from '../config';
-
-	function handle_run() {
-		fetch('/data.csv').then((v) => {
-			v.text().then((txt) => {
-				console.log(Parser(txt));
-			});
-		});
-	}
+	import Config from '../config';
 
 	function handle_remove_layer(index: number) {
 		HiddenLayerCaracteristicStore.remove_layer(index);
@@ -116,7 +106,7 @@
 					<button
 						class="icon-button"
 						disabled={(first && last) ||
-							$HiddenLayerCaracteristicStore.length <= config.inputs.hidden_layers.number.min}
+							$HiddenLayerCaracteristicStore.length <= Config.inputs.hidden_layers.number.min}
 						on:click={() => handle_remove_layer(hidden_layer_caracteristic_index)}
 					>
 						<img class="icon" src="/icons/remove.svg" alt="remove" />
@@ -126,13 +116,11 @@
 		{/each}
 		<button
 			on:click={handle_add_layer}
-			disabled={$HiddenLayerCaracteristicStore.length >= config.inputs.hidden_layers.number.max}
+			disabled={$HiddenLayerCaracteristicStore.length >= Config.inputs.hidden_layers.number.max}
 			class="add-layer-button"
 			style="margin-left: {$HiddenLayerCaracteristicStore.length * 12}px;">Add layer</button
 		>
 	</div>
-	<VisualLayers />
-	<button class="run" on:click={handle_run}>run</button>
 </div>
 
 <!-- ======================================== STYLE -->
@@ -234,8 +222,5 @@
 		@apply opacity-30 cursor-not-allowed;
 	}
 
-	button.run {
-		@apply mt-2 w-fit px-3 m-auto hover:bg-neutral-100 transition-all duration-150;
-		border: solid 1px black;
-	}
+
 </style>
