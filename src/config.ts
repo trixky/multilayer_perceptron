@@ -1,5 +1,7 @@
 import { Functions } from "./models/hidden_layer"
 
+const DATASET_SIZE = 569
+
 export default {
     inputs: {
         input_layer: {
@@ -42,6 +44,14 @@ export default {
             },
             function: {
                 default: Object.keys(Functions)[Object.values(Functions).indexOf(Functions.sigmoid)]
+            }
+        },
+        dataset: {
+            size: DATASET_SIZE,
+            train_test_ratio: {
+                default: 300,
+                min: 100,
+                max: DATASET_SIZE - 100,
             }
         }
     },
