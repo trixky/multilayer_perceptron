@@ -63,5 +63,17 @@ export default {
             },
             line_width: 0.3,
         }
+    },
+    module: {
+        random: {
+            bias: {
+                min: -10,
+                max: 10,
+            },
+            weight: {
+                min: -1,
+                max: 1,
+            }
+        }
     }
 }

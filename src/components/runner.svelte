@@ -1,6 +1,9 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
 	import Parser from '../logic/parser';
+	import ModelStore from '../stores/model'
+	import HiddenLayerCaracteristicStore from '../stores/hidden_layer';
+	import OutputLayerCaracteristicStore from '../stores/output_layer';
 
 	function handle_run() {
 		fetch('/data.csv').then((v) => {
@@ -8,6 +11,11 @@
 				console.log(Parser(txt));
 			});
 		});
+
+		ModelStore.initialize($HiddenLayerCaracteristicStore, $OutputLayerCaracteristicStore)
+		ModelStore.randomize()
+
+		console.log($ModelStore.layers)
 	}
 </script>
 

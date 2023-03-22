@@ -1,4 +1,4 @@
-import type Perceptron from "./perceptron"
+import type PerceptronModel from "./perceptron"
 
 export enum Functions {
     sigmoid = "sigmoid", // sigmoid
@@ -13,5 +13,5 @@ export interface LayerCaracteristics {
 
 export interface Layer {
     caracteristics: LayerCaracteristics
-    perceptrons: Array<Perceptron>
+    perceptrons: Array<PerceptronModel>
 }
