@@ -39,6 +39,9 @@ export default {
         output_layer: {
             size: {
                 default: 2
+            },
+            function: {
+                default: Object.keys(Functions)[Object.values(Functions).indexOf(Functions.sigmoid)]
             }
         }
     },

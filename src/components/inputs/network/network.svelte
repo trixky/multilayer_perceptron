@@ -1,15 +1,17 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
-	import HiddenLayerCaracteristicStore from '../../../stores/hidden_layer_caracteristic';
+	import HiddenLayerStore from '../../../stores/hidden_layer';
+	import OutputLayerStore from '../../../stores/output_layer';
 	import InputNetworkLayer from './layer.svelte';
 	import Config from '../../../config';
 
 	function handle_add_layer() {
-		HiddenLayerCaracteristicStore.add_last_copy_layer();
+		HiddenLayerStore.add_last_copy_layer();
 	}
 
 	function handle_randomize() {
-		HiddenLayerCaracteristicStore.randomize();
+		HiddenLayerStore.randomize();
+		OutputLayerStore.randomize();
 	}
 </script>
 
@@ -21,18 +23,24 @@
 	</header>
 	<div
 		class="hidden-layer-container"
-		style="transform: translateX(-{$HiddenLayerCaracteristicStore.length * 6}px)"
+		style="transform: translateX(-{$HiddenLayerStore.length * 6}px)"
 	>
-		{#each $HiddenLayerCaracteristicStore as caracterisics, index (index)}
+		<InputNetworkLayer index={-1} input_layer caracterisics={undefined} />
+		{#each $HiddenLayerStore as caracterisics, index (index)}
 			{@const first = index == 0}
-			{@const last = index == $HiddenLayerCaracteristicStore.length - 1}
+			{@const last = index == $HiddenLayerStore.length - 1}
 			<InputNetworkLayer {caracterisics} {index} {first} {last} />
 		{/each}
+		<InputNetworkLayer
+			index={$HiddenLayerStore.length}
+			output_layer
+			caracterisics={undefined}
+		/>
 		<button
 			on:click={handle_add_layer}
-			disabled={$HiddenLayerCaracteristicStore.length >= Config.inputs.hidden_layers.number.max}
+			disabled={$HiddenLayerStore.length >= Config.inputs.hidden_layers.number.max}
 			class="add-layer-button"
-			style="margin-left: {$HiddenLayerCaracteristicStore.length * 12}px;">Add layer</button
+			style="margin-left: {($HiddenLayerStore.length + 2) * 12}px;">Add layer</button
 		>
 	</div>
 </div>

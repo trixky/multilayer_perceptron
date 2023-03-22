@@ -3,12 +3,12 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import Config from '../../config';
-	import HiddenLayerCaracteristicsStore from '../../stores/hidden_layer_caracteristic';
+	import HiddenLayerStore from '../../stores/hidden_layer';
 	import type { HiddenLayerCaracteristics as HiddenLayerCaracteristicsModel } from '../../models/hidden_layer';
 
 	let ctx: any = undefined;
 
-	$: neurons_nbr = $HiddenLayerCaracteristicsStore.reduce((sum, hidden_layer) => sum + hidden_layer.size, 0) + Config.inputs.input_layer.size.default + Config.inputs.output_layer.size.default;
+	$: neurons_nbr = $HiddenLayerStore.reduce((sum, hidden_layer) => sum + hidden_layer.size, 0) + Config.inputs.input_layer.size.default + Config.inputs.output_layer.size.default;
 
 	const input_layer = <HiddenLayerCaracteristicsModel>{
 		size: Config.inputs.input_layer.size.default
@@ -18,7 +18,7 @@
 		size: Config.inputs.output_layer.size.default
 	};
 
-	$: if ($HiddenLayerCaracteristicsStore) {
+	$: if ($HiddenLayerStore) {
 		if (ctx != undefined) {
 			// Clear the canva
 			ctx.clearRect(
@@ -29,7 +29,7 @@
 			);
 
 			// Add the input and output layer to the hidden layers
-			const layers = [input_layer, ...$HiddenLayerCaracteristicsStore, output_layer];
+			const layers = [input_layer, ...$HiddenLayerStore, output_layer];
 
 			// Compute the x informations
 			const hidden_layer_nbr = layers.length;
