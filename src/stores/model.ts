@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import type { Layer as LayerModel } from '../models/layer';
-import type { Model as ModelModel } from '../models/model';
+import type ModelModel from '../models/model';
 import type PerceptronModel from '../models/perceptron';
 import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/layer';
 import Config from '../config'
@@ -24,7 +24,7 @@ function create_model_store() {
                     caracteristics: hidden_layer_caracteristic,
                     perceptrons: Array(hidden_layer_caracteristic.size).fill(null).map(_ => <PerceptronModel>{
                             bias: 0,
-                            input_weights: Array(index == 0 ? Config.inputs.input_layer.size.default : hidden_layer_caracteristics[index - 1].size).fill(null).map(_ => 0)
+                            weights: Array(index == 0 ? Config.inputs.input_layer.size.default : hidden_layer_caracteristics[index - 1].size).fill(null).map(_ => 0)
                         }
                     )
                 }
@@ -36,7 +36,7 @@ function create_model_store() {
                 caracteristics: output_layer,
                 perceptrons: Array(Config.inputs.output_layer.size.default).fill(null).map(_ => <PerceptronModel>{
                     bias: 0,
-                    input_weights: Array(hidden_layer_caracteristics[hidden_layer_caracteristics.length - 1].size).fill(null).map(_ => 0)
+                    weights: Array(hidden_layer_caracteristics[hidden_layer_caracteristics.length - 1].size).fill(null).map(_ => 0)
                 })
             })
 
@@ -47,7 +47,7 @@ function create_model_store() {
                 model.layers = model.layers.map(layer => <LayerModel>{
                     perceptrons: layer.perceptrons.map(perceptron => <PerceptronModel>{
                         bias: Config.module.random.bias.max - Math.random() * Math.abs(Config.module.random.bias.min - Config.module.random.bias.max),
-                        input_weights: perceptron.input_weights.map(_ => Config.module.random.weight.max - Math.random() * Math.abs(Config.module.random.weight.min - Config.module.random.weight.max))
+                        weights: perceptron.weights.map(_ => Config.module.random.weight.max - Math.random() * Math.abs(Config.module.random.weight.min - Config.module.random.weight.max))
                     })
                 })
 

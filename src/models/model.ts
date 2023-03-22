@@ -1,5 +1,5 @@
 import type {Layer as LayerModel} from "./layer"
 
-export interface Model {
+export default interface Model {
     layers: Array<LayerModel>
 }

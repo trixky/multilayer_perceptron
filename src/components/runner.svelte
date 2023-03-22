@@ -1,21 +1,30 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
 	import Parser from '../logic/parser';
-	import ModelStore from '../stores/model'
+	import ModelStore from '../stores/model';
 	import HiddenLayerCaracteristicStore from '../stores/hidden_layer';
 	import OutputLayerCaracteristicStore from '../stores/output_layer';
+	import { predict_mini_batch } from '../logic/prediction';
+	import type MiniBatchModel from '../models/mini_batch';
 
 	function handle_run() {
 		fetch('/data.csv').then((v) => {
 			v.text().then((txt) => {
-				console.log(Parser(txt));
+				const patients = Parser(txt);
+
+				const mini_batch = <MiniBatchModel>{
+					patients: [patients[0], patients[1]]
+				}
+
+				ModelStore.initialize($HiddenLayerCaracteristicStore, $OutputLayerCaracteristicStore);
+				ModelStore.randomize();
+
+
+				const prediction = predict_mini_batch($ModelStore, mini_batch);
+				console.log("---------- prediction:")
+				console.log(prediction)
 			});
 		});
-
-		ModelStore.initialize($HiddenLayerCaracteristicStore, $OutputLayerCaracteristicStore)
-		ModelStore.randomize()
-
-		console.log($ModelStore.layers)
 	}
 </script>
 
