@@ -18,7 +18,7 @@ export default {
                     clamper: {
                         luck: 4,
                         threshold: 3,
-                        cut: 3
+                        cut: 2
                     }
                 }
             },
