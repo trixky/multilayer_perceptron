@@ -4,17 +4,17 @@
 	import { onMount } from 'svelte';
 	import Config from '../../config';
 	import HiddenLayerStore from '../../stores/hidden_layer';
-	import type { HiddenLayerCaracteristics as HiddenLayerCaracteristicsModel } from '../../models/hidden_layer';
+	import type { LayerCaracteristics as LayerCaracteristicsModel } from '../../models/layer';
 
 	let ctx: any = undefined;
 
 	$: neurons_nbr = $HiddenLayerStore.reduce((sum, hidden_layer) => sum + hidden_layer.size, 0) + Config.inputs.input_layer.size.default + Config.inputs.output_layer.size.default;
 
-	const input_layer = <HiddenLayerCaracteristicsModel>{
+	const input_layer = <LayerCaracteristicsModel>{
 		size: Config.inputs.input_layer.size.default
 	};
 
-	const output_layer = <HiddenLayerCaracteristicsModel>{
+	const output_layer = <LayerCaracteristicsModel>{
 		size: Config.inputs.output_layer.size.default
 	};
 

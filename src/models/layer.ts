@@ -6,12 +6,12 @@ export enum Functions {
     rectified_linear_unit = "retified-l-u", // rectified linear unit
 }
 
-export interface HiddenLayerCaracteristics {
+export interface LayerCaracteristics {
     size: number,
     function: Functions,
 }
 
-export interface HiddenLayer {
-    caracteristics: HiddenLayerCaracteristics
+export interface Layer {
+    caracteristics: LayerCaracteristics
     perceptrons: Array<Perceptron>
 }

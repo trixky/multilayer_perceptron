@@ -1,10 +1,10 @@
 import { writable } from 'svelte/store';
-import type { HiddenLayerCaracteristics as HiddenLayerCaracteristicsModel } from '../models/hidden_layer';
-import { Functions } from '../models/hidden_layer';
+import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/layer';
+import { Functions } from '../models/layer';
 import Config from '../config'
 
-function new_default_output_layers(): HiddenLayerCaracteristicsModel {
-    return <HiddenLayerCaracteristicsModel>{
+function new_default_output_layers(): LayerCaracteristicsModel {
+    return <LayerCaracteristicsModel>{
         size: Config.inputs.output_layer.size.default,
         function: Config.inputs.output_layer.function.default
     }

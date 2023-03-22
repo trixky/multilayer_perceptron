@@ -1,24 +1,24 @@
 import { writable } from 'svelte/store';
-import type { HiddenLayerCaracteristics as HiddenLayerCaracteristicsModel } from '../models/hidden_layer';
-import { Functions } from '../models/hidden_layer';
+import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/layer';
+import { Functions } from '../models/layer';
 
 import Config from '../config'
 
-function new_default_hidden_layer(): HiddenLayerCaracteristicsModel {
-    return <HiddenLayerCaracteristicsModel>{
+function new_default_hidden_layer(): LayerCaracteristicsModel {
+    return <LayerCaracteristicsModel>{
         size: Config.inputs.hidden_layers.size.default,
         function: Config.inputs.hidden_layers.function.default
     }
 }
 
-function new_default_hidden_layers(): Array<HiddenLayerCaracteristicsModel> {
-    const HiddenLayerCaracteristics = <Array<HiddenLayerCaracteristicsModel>>[]
+function new_default_hidden_layers(): Array<LayerCaracteristicsModel> {
+    const LayerCaracteristics = <Array<LayerCaracteristicsModel>>[]
 
     for (let i = Config.inputs.hidden_layers.number.default; i > 0; i--) {
-        HiddenLayerCaracteristics.push(new_default_hidden_layer())
+        LayerCaracteristics.push(new_default_hidden_layer())
     }
 
-    return HiddenLayerCaracteristics
+    return LayerCaracteristics
 }
 
 function create_hidden_layer_caracteristic_store() {
@@ -29,7 +29,7 @@ function create_hidden_layer_caracteristic_store() {
         reset: () => {
             set(new_default_hidden_layers())
         },
-        add_layer: (hidden_layer_caracteristics: HiddenLayerCaracteristicsModel) => {
+        add_layer: (hidden_layer_caracteristics: LayerCaracteristicsModel) => {
             update(hidden_layers => {
                 if (hidden_layers.length < Config.inputs.hidden_layers.number.max) {
                     hidden_layers.push(hidden_layer_caracteristics)
@@ -49,7 +49,7 @@ function create_hidden_layer_caracteristic_store() {
         add_last_copy_layer: () => {
             update(hidden_layers => {
                 if (hidden_layers.length < Config.inputs.hidden_layers.number.max) {
-                    hidden_layers.push(<HiddenLayerCaracteristicsModel>{
+                    hidden_layers.push(<LayerCaracteristicsModel>{
                         size: hidden_layers[hidden_layers.length - 1].size,
                         function: hidden_layers[hidden_layers.length - 1].function
                     })
@@ -104,7 +104,7 @@ function create_hidden_layer_caracteristic_store() {
             update(hidden_layers => {
                 if (index > 0) {
                     const layer_up = hidden_layers[index - 1]
-                    const layer_up_copy = <HiddenLayerCaracteristicsModel>{
+                    const layer_up_copy = <LayerCaracteristicsModel>{
                         size: layer_up.size,
                         function: layer_up.function
                     }
@@ -120,7 +120,7 @@ function create_hidden_layer_caracteristic_store() {
             update(hidden_layers => {
                 if (index < hidden_layers.length - 1) {
                     const layer_down = hidden_layers[index + 1]
-                    const layer_down_copy = <HiddenLayerCaracteristicsModel>{
+                    const layer_down_copy = <LayerCaracteristicsModel>{
                         size: layer_down.size,
                         function: layer_down.function
                     }
@@ -133,7 +133,7 @@ function create_hidden_layer_caracteristic_store() {
             })
         },
         randomize: () => {
-            const random_hidden_layers: Array<HiddenLayerCaracteristicsModel> = []
+            const random_hidden_layers: Array<LayerCaracteristicsModel> = []
 
             // Find a random layer number
             let random_hidden_layer_nbr = Math.ceil(Math.random() * (Config.inputs.hidden_layers.number.max - Config.inputs.hidden_layers.number.min)) + Config.inputs.hidden_layers.number.min;
@@ -155,7 +155,7 @@ function create_hidden_layer_caracteristic_store() {
                     random_size -= Config.inputs.hidden_layers.size.random.clamper.cut
                 }
 
-                random_hidden_layers.push(<HiddenLayerCaracteristicsModel>{
+                random_hidden_layers.push(<LayerCaracteristicsModel>{
                     function: random_function,
                     size: random_size
                 })

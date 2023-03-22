@@ -1,4 +1,4 @@
-import { Functions } from "./models/hidden_layer"
+import { Functions } from "./models/layer"
 
 const DATASET_SIZE = 569
 
@@ -49,7 +49,7 @@ export default {
         dataset: {
             size: DATASET_SIZE,
             train_test_ratio: {
-                default: 300,
+                default: 350,
                 min: 100,
                 max: DATASET_SIZE - 100,
             }

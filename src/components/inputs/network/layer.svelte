@@ -3,13 +3,13 @@
 	import HiddenLayerStore from '../../../stores/hidden_layer';
 	import OutputLayerStore from '../../../stores/output_layer';
 	import Config from '../../../config';
-	import type { HiddenLayerCaracteristics as HiddenLayerCaracteristicsModel } from '../../../models/hidden_layer';
+	import type { LayerCaracteristics as LayerCaracteristicsModel } from '../../../models/layer';
 
 	export let index: number;
 	export let first = false;
 	export let last = false;
 
-	export let caracterisics: HiddenLayerCaracteristicsModel | undefined;
+	export let caracterisics: LayerCaracteristicsModel | undefined;
 
 	export let input_layer = false;
 	export let output_layer = false;
