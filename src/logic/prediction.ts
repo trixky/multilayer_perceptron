@@ -1,14 +1,9 @@
 import type ModelModel from "../models/model";
 import type PatientModel from '../models/patient'
 import type MiniBatchModel from '../models/mini_batch'
-import type {PatientPrediction as PatientPredictionModel, MiniBatchPrediction as MiniBatchPredictionModel} from '../models/prediction'
+import type { PatientPrediction as PatientPredictionModel, MiniBatchPrediction as MiniBatchPredictionModel } from '../models/prediction'
+import sigmoid from './functions/sigmoid'
 
-// sigmoid implement the mathematical sigmoid function
-function sigmoid(z: number) {
-    const k = 2;
-
-    return 1 / (1 + Math.exp(-z / k));
-}
 
 // predict_patient predicts the patient result values according to the model
 export function predict_patient(model: ModelModel, patient: PatientModel): PatientPredictionModel {
