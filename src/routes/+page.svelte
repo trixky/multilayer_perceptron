@@ -13,8 +13,3 @@
 <VisualLayers />
 <TrainTest />
 <Runner />
-
-
-<!-- ======================================== STYLE -->
-<style lang="postcss">
-</style>

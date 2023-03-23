@@ -4,25 +4,66 @@
 	import ModelStore from '../stores/model';
 	import HiddenLayerCaracteristicStore from '../stores/hidden_layer';
 	import OutputLayerCaracteristicStore from '../stores/output_layer';
-	import { predict_mini_batch } from '../logic/prediction';
-	import type MiniBatchModel from '../models/mini_batch';
+	import { predict_patient, predict_mini_batch } from '../logic/prediction';
+	import type MiniBatch from '../models/mini_batch';
+	import {estimate_patient_output_layer_cost, estimate_mini_batch_output_layer_cost, estimate_total_cost} from '../logic/cost'
 
 	function handle_run() {
 		fetch('/data.csv').then((v) => {
 			v.text().then((txt) => {
 				const patients = Parser(txt);
 
-				const mini_batch = <MiniBatchModel>{
-					patients: [patients[0], patients[1]]
-				}
 
 				ModelStore.initialize($HiddenLayerCaracteristicStore, $OutputLayerCaracteristicStore);
 				ModelStore.randomize();
 
 
-				const prediction = predict_mini_batch($ModelStore, mini_batch);
+				console.log("--------------------------------------------- patient_0")
+				const patient_0 = patients[0]
+				const patient_0_prediction = predict_patient($ModelStore, patient_0);
 				console.log("---------- prediction:")
-				console.log(prediction)
+				console.log(patient_0_prediction)
+
+				const patient_0_output_cost_result = estimate_patient_output_layer_cost(patient_0, patient_0_prediction)
+				console.log("---------- output_cost:")
+				console.log(patient_0_output_cost_result)
+
+				const patient_0_total_cost_result = estimate_total_cost(patient_0_output_cost_result)
+				console.log("---------- tota_cost:")
+				console.log(patient_0_total_cost_result)
+
+				console.log("--------------------------------------------- patient_1")
+				const patient_1 = patients[1]
+				const patient_1_prediction = predict_patient($ModelStore, patient_1);
+				console.log("---------- prediction:")
+				console.log(patient_1_prediction)
+
+				const patient_1_output_cost_result = estimate_patient_output_layer_cost(patient_1, patient_1_prediction)
+				console.log("---------- output_cost:")
+				console.log(patient_1_output_cost_result)
+
+				const patient_1_total_cost_result = estimate_total_cost(patient_1_output_cost_result)
+				console.log("---------- tota_cost:")
+				console.log(patient_1_total_cost_result)
+
+
+				console.log("--------------------------------------------- mini_batch")
+				const mini_batch = <MiniBatch>{
+					patients: [patients[0], patients[1]]
+				}
+
+				const mini_batch_prediction = predict_mini_batch($ModelStore, mini_batch);
+				console.log("---------- prediction:")
+				console.log(mini_batch_prediction)
+
+				const mini_batch_output_cost_result = estimate_mini_batch_output_layer_cost(mini_batch, mini_batch_prediction)
+				console.log("---------- output_cost:")
+				console.log(mini_batch_output_cost_result)
+
+				const mini_batch_total_cost_result = estimate_total_cost(mini_batch_output_cost_result)
+				console.log("---------- tota_cost:")
+				console.log(mini_batch_total_cost_result)
+
 			});
 		});
 	}

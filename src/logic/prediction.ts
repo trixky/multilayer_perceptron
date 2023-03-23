@@ -1,7 +1,7 @@
 import type ModelModel from "../models/model";
 import type PatientModel from '../models/patient'
 import type MiniBatchModel from '../models/mini_batch'
-import type PredictionModel from '../models/prediction'
+import type {PatientPrediction as PatientPredictionModel, MiniBatchPrediction as MiniBatchPredictionModel} from '../models/prediction'
 
 // sigmoid implement the mathematical sigmoid function
 function sigmoid(z: number) {
@@ -11,9 +11,9 @@ function sigmoid(z: number) {
 }
 
 // predict_patient predicts the patient result values according to the model
-export function predict_patient(model: ModelModel, patient: PatientModel): PredictionModel {
+export function predict_patient(model: ModelModel, patient: PatientModel): PatientPredictionModel {
     // Intitialize the patient prediction
-    const patient_prediction = <PredictionModel>{
+    const patient_prediction = <PatientPredictionModel>{
         layers: []
     }
 
@@ -62,10 +62,10 @@ export function predict_patient(model: ModelModel, patient: PatientModel): Predi
 }
 
 // predict_mini_batch predicts the mini-batch result values according to the model
-export function predict_mini_batch(model: ModelModel, mini_batch: MiniBatchModel): PredictionModel {
+export function predict_mini_batch(model: ModelModel, mini_batch: MiniBatchModel): MiniBatchPredictionModel {
     // Intitialize the mini-batch prediction
-    let mini_batch_prediction = <PredictionModel>{
-        layers: model.layers.map(layer => layer.perceptrons.map(_ => 0))
+    let mini_batch_prediction = <MiniBatchPredictionModel>{
+        patients: []
     }
 
     mini_batch.patients.forEach((patient, patient_index) => {
@@ -74,16 +74,9 @@ export function predict_mini_batch(model: ModelModel, mini_batch: MiniBatchModel
         // Compute the patient prediction
         const patient_prediction = predict_patient(model, patient)
 
-        // add each result values of each layers of the patient prediction to the mini-bach prediction
-        patient_prediction.layers.forEach((layer, layer_index) => {
-            layer.forEach((value, value_index) => {
-                mini_batch_prediction.layers[layer_index][value_index] += value
-            })
-        })
+        // Add the patient prediction to the mini batch patient predictions
+        mini_batch_prediction.patients.push(patient_prediction)
     })
-
-    // Compute the mean of each result values of each layers of each patients of the mini-batch
-    mini_batch_prediction.layers = mini_batch_prediction.layers.map(layer => layer.map(value => value / mini_batch.patients.length))
 
     return mini_batch_prediction
 }

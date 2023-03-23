@@ -67,8 +67,8 @@ export default {
     module: {
         random: {
             bias: {
-                min: -10,
-                max: 10,
+                min: -1,
+                max: 1,
             },
             weight: {
                 min: -1,
