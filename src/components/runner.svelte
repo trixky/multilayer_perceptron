@@ -7,16 +7,17 @@
 	import { predict_patient, predict_mini_batch } from '../logic/prediction';
 	import type MiniBatch from '../models/mini_batch';
 	import {estimate_patient_output_layer_cost, estimate_mini_batch_output_layer_cost, estimate_total_cost} from '../logic/cost'
+	import { min_max_normalizer } from '../logic/normalizer';
 
 	function handle_run() {
 		fetch('/data.csv').then((v) => {
 			v.text().then((txt) => {
 				const patients = Parser(txt);
 
+				min_max_normalizer(patients)
 
 				ModelStore.initialize($HiddenLayerCaracteristicStore, $OutputLayerCaracteristicStore);
 				ModelStore.randomize();
-
 
 				console.log("--------------------------------------------- patient_0")
 				const patient_0 = patients[0]
