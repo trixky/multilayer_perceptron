@@ -3,6 +3,7 @@ import type PatientModel from '../models/patient'
 import type MiniBatchModel from '../models/mini_batch'
 import type { PatientPrediction as PatientPredictionModel, MiniBatchPrediction as MiniBatchPredictionModel } from '../models/prediction'
 import sigmoid from './functions/sigmoid'
+import softmax from "./functions/softmax";
 
 
 // predict_patient predicts the patient result values according to the model
@@ -15,42 +16,46 @@ export function predict_patient(model: ModelModel, patient: PatientModel): Patie
     // Intitialize the previous layer values with the patient inputs
     let previous_values: Array<number> = patient.inputs
 
-    model.layers.forEach(layer => {
+    model.layers.forEach((layer, layer_index) => {
         // For each layer of the model
+        
+
+        const last_layer = layer_index == model.layers.length - 1
 
         // Initialize the result values of the layer
-        const current_values: Array<number> = []
+        const current_values: Array<Array<number>> = []
 
         layer.perceptrons.forEach(perceptron => {
             // For each perceptron of the layer
 
             // Initialize the sum of the previous layer values
-            let current_sum: number = 0
+            let current_sum: Array<number> = []
 
             perceptron.weights.forEach((weight, weight_index) => {
                 // For each perceptron weight
 
                 // Add the to the sum the corresponding previous layer value
                 // Affected by its weight
-                current_sum += previous_values[weight_index] * weight
+                current_sum.push(previous_values[weight_index] * weight)
             })
 
             // Add the perceptron bias to the sum
-            current_sum += perceptron.bias
+            current_sum.push(perceptron.bias)
 
             // Call the sigmoid function on the sum
             // TODO: use the perceptron function
-            const current_value = sigmoid(current_sum)
 
             // Save the final result value to the layer result values
-            current_values.push(current_value)
+            current_values.push(current_sum)
         })
 
+        const current_values_activation = last_layer ? softmax(current_values.map(value => value.reduce((a, b) => a + b))) : current_values.map(value => sigmoid(value.reduce((a, b) => a + b) / layer.perceptrons.length))
+
         // Save the current layer result values as the previous one for the next iteration
-        previous_values = current_values
+        previous_values = current_values_activation
 
         // Save the current layer result values in the patient prediction
-        patient_prediction.layers.push(current_values)
+        patient_prediction.layers.push(current_values_activation)
     })
 
     return patient_prediction

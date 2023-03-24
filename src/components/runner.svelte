@@ -33,7 +33,7 @@
 				console.log(patient_0_total_cost_result)
 
 				console.log("--------------------------------------------- patient_1")
-				const patient_1 = patients[1]
+				const patient_1 = patients[19]
 				const patient_1_prediction = predict_patient($ModelStore, patient_1);
 				console.log("---------- prediction:")
 				console.log(patient_1_prediction)
@@ -49,8 +49,10 @@
 
 				console.log("--------------------------------------------- mini_batch")
 				const mini_batch = <MiniBatch>{
-					patients: [patients[0], patients[1]]
+					patients: [patient_0, patient_1]
 				}
+				console.log("---------- mini_batch:")
+				console.log(mini_batch)
 
 				const mini_batch_prediction = predict_mini_batch($ModelStore, mini_batch);
 				console.log("---------- prediction:")

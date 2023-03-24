@@ -75,5 +75,10 @@ export default {
                 max: 1,
             }
         }
+    },
+    math: {
+        log: {
+            clip: 1e-15
+        }
     }
 }

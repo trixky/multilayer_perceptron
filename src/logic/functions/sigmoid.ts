@@ -1,3 +1,5 @@
+
+// sigmoid is the sigmoid mathematical function implementation
 export default function sigmoid(z: number) {
     // Set the constant k to 2
     const k = 2;
