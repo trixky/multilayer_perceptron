@@ -1,6 +1,7 @@
 // softmax is the softmax mathematical function implementation
 export default function softmax(x: number[]): number[] {
     // https://www.youtube.com/watch?v=KpKog-L9veg&t=505s&ab_channel=StatQuestwithJoshStarmer
+    // https://www.mldawn.com/the-derivative-of-softmaxz-function-w-r-t-z/
 
     // Calculate the exponential of each element in the input array
     const exps = x.map(Math.exp);
