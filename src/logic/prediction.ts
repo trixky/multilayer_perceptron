@@ -3,7 +3,7 @@ import type PatientModel from '../models/patient'
 import type MiniBatchModel from '../models/mini_batch'
 import type { PatientPrediction as PatientPredictionModel, MiniBatchPrediction as MiniBatchPredictionModel } from '../models/prediction'
 import sigmoid from './functions/sigmoid'
-import softmax from "./functions/softmax";
+import { softmax } from "./functions/softmax";
 
 
 // predict_patient predicts the patient result values according to the model
@@ -18,7 +18,7 @@ export function predict_patient(model: ModelModel, patient: PatientModel): Patie
 
     model.layers.forEach((layer, layer_index) => {
         // For each layer of the model
-        
+
 
         const last_layer = layer_index == model.layers.length - 1
 

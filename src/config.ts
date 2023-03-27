@@ -53,6 +53,13 @@ export default {
                 min: 100,
                 max: DATASET_SIZE - 100,
             }
+        },
+        learning: {
+            rate: {
+                default: 1,
+                min: 1,
+                max: 10
+            }
         }
     },
     visuals: {
