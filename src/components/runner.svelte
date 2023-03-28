@@ -5,10 +5,12 @@
 	import OutputLayerCaracteristicStore from '../stores/output_layer';
 	import { min_max_normalizer } from '../logic/normalizer';
 	import ModelClass from '../logic/model';
+	import AccuracyStore from '../stores/accuracy';
+	import { sleep } from '../utils/time';
 
 	function handle_run() {
 		fetch('/data.csv').then((v) => {
-			v.text().then((txt) => {
+			v.text().then(async (txt) => {
 				const patients = Parser(txt);
 
 				min_max_normalizer(patients);
@@ -18,10 +20,15 @@
 					$OutputLayerCaracteristicStore
 				);
 
-				for (let i = 0; i < 1000; i++) {
+				AccuracyStore.reset()
+
+				for (let i = 0; i < 300; i++) {
 					console.log('**********************************', i);
 					model.train(patients);
-					console.log(model.get_accuracy(patients));
+					const accuracy = model.get_accuracy(patients);
+					console.log(accuracy);
+					AccuracyStore.push(accuracy);
+					await sleep(50)
 				}
 			});
 		});

@@ -7,27 +7,12 @@ import sigmoid from "./functions/sigmoid";
 import { softmax } from "./functions/softmax";
 import { derivated_binary_cross_entropy_wrt_softmax_input } from "./functions/bce";
 import { derivate_sigmoid } from "../models/derivation";
-import type Patient from "../models/patient";
+import type AccuracyModel from "../models/accuracy";
 
 interface LearnedWeights {
     hidden_layers: Array<Array<Array<number>>>,
     output_layer: Array<Array<number>>,
 }
-
-interface Accuracy {
-    mean: number,
-    net: {
-        valid: {
-            malignant: number,
-            benign: number,
-        },
-        invalid: {
-            malignant: number,
-            benign: number,
-        }
-    }
-}
-
 
 export default class Model {
     private hidden_layers: Array<LayerModel>;
@@ -141,8 +126,8 @@ export default class Model {
     // =================================
     // ==================
 
-    get_accuracy(patients: Array<PatientModel>): Accuracy {
-        const accuracy = <Accuracy>{
+    get_accuracy(patients: Array<PatientModel>): AccuracyModel {
+        const accuracy = <AccuracyModel>{
             mean: 0,
             net: {
                 valid: {
@@ -168,7 +153,6 @@ export default class Model {
                 // Else the diagnosis is benign
                 outputs[1] > 0.5 ? accuracy.net.valid.benign++ : accuracy.net.invalid.benign++
             }
-
         })
 
         accuracy.mean /= patients.length

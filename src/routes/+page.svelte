@@ -5,6 +5,7 @@
 	import VisualLayers from '../components/visual/layers.svelte';
 	import Runner from '../components/runner.svelte';
 	import TrainTest from '../components/inputs/train_test.svelte';
+	import VisualPie from '../components/visual/pie.svelte'
 </script>
 
 <!-- ======================================== CONTENT -->
@@ -13,3 +14,4 @@
 <VisualLayers />
 <TrainTest />
 <Runner />
+<VisualPie />

@@ -56,8 +56,8 @@ export default {
         },
         learning: {
             rate: {
-                default: 1,
-                min: 1,
+                default: 0.5,
+                min: 0.01,
                 max: 10
             }
         }

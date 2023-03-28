@@ -94,7 +94,7 @@
 </script>
 
 <!-- ======================================== CONTENT -->
-<div class="visual-container">
+<div class="visual-layers-container">
 	<p class="neurons-counter">{neurons_nbr} neurons</p>
 	<canvas
 		id="network-canva"
@@ -105,7 +105,7 @@
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-	.visual-container {
+	.visual-layers-container {
 		@apply relative my-2;
 	}
 
