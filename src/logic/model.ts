@@ -158,9 +158,6 @@ export default class Model {
 
         patients.map(patient => {
             const outputs = this.predict(patient)
-            console.log("*********")
-            console.log(patient.diagnosis)
-            console.log(outputs)
 
             accuracy.mean += outputs[Number(!patient.diagnosis)]
 

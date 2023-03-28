@@ -18,15 +18,11 @@
 					$OutputLayerCaracteristicStore
 				);
 
-				// const batch = patients.slice(-10)
-				// const batch = [patients[60], patients[0]]
-				const batch = patients
-
 				for (let i = 0; i < 1000; i++) {
 					console.log('**********************************', i);
-					model.train(batch)
+					model.train(patients);
+					console.log(model.get_accuracy(patients));
 				}
-				console.log(model.get_accuracy(batch))
 			});
 		});
 	}
