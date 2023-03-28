@@ -56,20 +56,34 @@ export default {
         },
         learning: {
             rate: {
-                default: 0.5,
+                // default: 0.1,
+                default: 0.5, // default for 16x16
                 min: 0.01,
                 max: 10
             }
         }
     },
     visuals: {
+        colors: {
+            global_accuracy: 'rgb(0, 0, 0)',
+            diagnosis: {
+                valid: {
+                    malignant: 'rgb(153, 204, 255)',
+                    benign: 'rgb(153, 255, 153)'
+                },
+                invalid: {
+                    malignant: 'rgb(255, 153, 153)',
+                    benign: 'rgb(255, 204, 153)'
+                },
+            }
+        },
         layers: {
             dimensions: {
                 width: 400,
                 height: 500
             },
             line_width: 0.3,
-        }
+        },
     },
     module: {
         random: {

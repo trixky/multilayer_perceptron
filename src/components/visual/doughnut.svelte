@@ -1,27 +1,23 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
-	import { Pie } from 'svelte-chartjs';
+	import { Doughnut } from 'svelte-chartjs';
 	import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale } from 'chart.js';
 	import AccuracyStore from '../../stores/accuracy';
+	import Config from '../../config';
 
 	ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
-	const COLOR_valid_malignant = 'rgb(153, 204, 255)';
-	const COLOR_valid_benign = 'rgb(153, 255, 153)';
-	const COLOR_invalid_malignant = 'rgb(255, 153, 153)';
-	const COLOR_invalid_benign = 'rgb(255, 204, 153)';
-
 	let data = {
-		labels: ['valid malignant', 'valid benign', 'invalid malignant', 'invalid benign'],
+		labels: ['valid benign', 'valid malignant', 'invalid benign', 'invalid malignant'],
 		datasets: [
 			{
 				label: 'My First Dataset',
 				data: [0, 0, 0, 0],
 				backgroundColor: [
-					COLOR_valid_malignant,
-					COLOR_valid_benign,
-					COLOR_invalid_malignant,
-					COLOR_invalid_benign
+					Config.visuals.colors.diagnosis.valid.benign,
+					Config.visuals.colors.diagnosis.valid.malignant,
+					Config.visuals.colors.diagnosis.invalid.benign,
+					Config.visuals.colors.diagnosis.invalid.malignant,
 				],
 				hoverOffset: 4
 			}
@@ -34,40 +30,33 @@
 		previous_accuracy_store_length = $AccuracyStore.length;
 
 		data.datasets[0].data = [
-			$AccuracyStore[previous_accuracy_store_length - 1].net.valid.malignant,
 			$AccuracyStore[previous_accuracy_store_length - 1].net.valid.benign,
+			$AccuracyStore[previous_accuracy_store_length - 1].net.valid.malignant,
+			$AccuracyStore[previous_accuracy_store_length - 1].net.invalid.benign,
 			$AccuracyStore[previous_accuracy_store_length - 1].net.invalid.malignant,
-			$AccuracyStore[previous_accuracy_store_length - 1].net.invalid.benign
 		];
 	}
-
-	const config = {
-		type: 'pie',
-		data: data,
-		options: {
-			responsive: true,
-			plugins: {
-				legend: {
-					position: 'top'
-				},
-				title: {
-					display: true,
-					text: 'Chart.js Pie Chart'
-				}
-			},
-			animation: false
-		}
-	};
 </script>
 
 <!-- ======================================== CONTENT -->
 <div class="visual-pie-container">
-	<Pie
-		{data}
+	<Doughnut
+	{data}
+	style="width: 360px; margin-top: -60px; margin-bottom: -60px; !important"
 		options={{
-			responsive: true,
+			responsive: false,
 			animation: {
-				duration: 30,
+				duration: 30
+			},
+			plugins: {
+				legend: {
+					// display: false,
+					position: "right",
+					labels: {
+						// boxPadding: 140,
+						padding: 20,
+					}
+				}
 			}
 		}}
 	/>
@@ -75,7 +64,11 @@
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-    .visual-pie-container {
-        @apply my-8;
-    }
+	.visual-pie-container {
+		@apply my-2 mx-auto;
+		/* height: 400px; */
+		/* margin-top: -60px !important;
+		margin-bottom: -60px !important; */
+		overflow: hidden;
+	}
 </style>

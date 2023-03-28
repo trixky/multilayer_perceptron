@@ -22,13 +22,13 @@
 
 				AccuracyStore.reset()
 
-				for (let i = 0; i < 300; i++) {
+				for (let i = 0; i < 800; i++) {
 					console.log('**********************************', i);
 					model.train(patients);
 					const accuracy = model.get_accuracy(patients);
 					console.log(accuracy);
 					AccuracyStore.push(accuracy);
-					await sleep(50)
+					await sleep(10)
 				}
 			});
 		});
@@ -38,7 +38,6 @@
 <!-- ======================================== CONTENT -->
 <div class="runner-container">
 	<button on:click={handle_run}>train</button>
-	<button on:click={handle_run}>predict</button>
 </div>
 
 <!-- ======================================== STYLE -->
