@@ -4,6 +4,7 @@
 	import OutputLayerStore from '../../../stores/output_layer';
 	import Config from '../../../config';
 	import type { LayerCaracteristics as LayerCaracteristicsModel } from '../../../models/layer';
+	import ProgressStore from '../../../stores/progress';
 
 	export let index: number;
 	export let first = false;
@@ -65,12 +66,14 @@
 					<button
 						class="icon-button modificator-button"
 						on:click={() => handle_increase_size(index)}
+						disabled={$ProgressStore}
 					>
 						<img class="icon" src="/icons/plus.svg" alt="plus" />
 					</button>
 					<button
 						class="icon-button modificator-button"
 						on:click={() => handle_decrease_size(index)}
+						disabled={$ProgressStore}
 					>
 						<img class="icon" src="/icons/minus.svg" alt="minus" />
 					</button>
@@ -79,13 +82,16 @@
 		</div>
 		<div class="hidden-layer-caracteristic-input">
 			{#if caracterisics != undefined || output_layer}
-				<p class="function">{caracterisics != undefined ? caracterisics.function : $OutputLayerStore.function}</p>
+				<p class="function">
+					{caracterisics != undefined ? caracterisics.function : $OutputLayerStore.function}
+				</p>
 				<div class="hidden-layer-caracteristic-input-modificator">
 					<button
 						class="icon-button modificator-button"
 						on:click={() => {
 							handle_change_function(index);
 						}}
+						disabled={$ProgressStore}
 					>
 						<img class="icon" src="/icons/refresh.svg" alt="change" />
 					</button>
@@ -95,15 +101,24 @@
 	</div>
 	{#if !input_layer && !output_layer}
 		<div class="hidden-layer-management">
-			<button class="icon-button" disabled={first} on:click={() => handle_move_up(index)}>
+			<button
+				class="icon-button"
+				disabled={first || $ProgressStore}
+				on:click={() => handle_move_up(index)}
+			>
 				<img class="icon" src="/icons/arrow.svg" style="transform: scaleY(-1);" alt="up" />
 			</button>
-			<button class="icon-button" disabled={last} on:click={() => handle_move_down(index)}>
+			<button
+				class="icon-button"
+				disabled={last || $ProgressStore}
+				on:click={() => handle_move_down(index)}
+			>
 				<img class="icon" src="/icons/arrow.svg" alt="down" />
 			</button>
 			<button
 				class="icon-button"
 				disabled={(first && last) ||
+					$ProgressStore ||
 					$HiddenLayerStore.length <= Config.inputs.hidden_layers.number.min}
 				on:click={() => handle_remove_layer(index)}
 			>

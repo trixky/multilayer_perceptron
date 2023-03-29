@@ -272,7 +272,7 @@ export default class Model {
         const inputs = this.hidden_layers[this.hidden_layers.length - 1].perceptrons.map(perceptron => perceptron.output)
 
         const learned_weight_output_layer = this.output_layer.perceptrons.map(perceptron =>
-            perceptron.weights.map((_, weight_index) => perceptron.weights[weight_index] - Config.inputs.learning.rate.default * perceptron.error * inputs[weight_index])
+            perceptron.weights.map((_, weight_index) => perceptron.weights[weight_index] - Config.inputs.learning_rate.start.default * perceptron.error * inputs[weight_index])
         )
 
         const learned_weights_hidden_layers = this.hidden_layers.map((hidden_layer, hidden_layer_index) => {
@@ -281,7 +281,7 @@ export default class Model {
 
             return hidden_layer.perceptrons.map(perceptron =>
                 perceptron.weights.map((_, weight_index) =>
-                    perceptron.weights[weight_index] - Config.inputs.learning.rate.default * perceptron.error * inputs[weight_index]
+                    perceptron.weights[weight_index] - Config.inputs.learning_rate.start.default * perceptron.error * inputs[weight_index]
                 )
             )
         })

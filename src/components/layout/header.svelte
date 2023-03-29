@@ -4,7 +4,7 @@
 
 <!-- ======================================== CONTENT -->
 <header>
-	<h1><a href="https://github.com/trixky/perceptron" target="_blank" >Perceptron </a></h1>
+	<h1><a href="https://github.com/trixky/perceptron" target="_blank" >Multilayer<br>perceptron </a></h1>
 </header>
 
 <!-- ======================================== STYLE -->

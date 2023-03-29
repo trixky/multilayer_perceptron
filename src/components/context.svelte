@@ -11,7 +11,7 @@
 			dataset of breast cancer diagnosis in the Wisconsin.
 		</p>
 		<p class="right">
-			Dataset describe the characteristics of a cell nucleus of breast mass extracted with
+			Dataset describe the (30) characteristics of a cell nucleus of breast mass extracted with
 			fine-needle aspiration (FNA) on 569 patients.
 		</p>
 		<p class="download">
@@ -28,7 +28,7 @@
 
 	.text-container {
 		@apply text-sm;
-		width: 320px;
+		width: 400px;
 	}
 
 	.text-container > p {

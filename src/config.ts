@@ -49,23 +49,49 @@ export default {
         dataset: {
             size: DATASET_SIZE,
             train_test_ratio: {
-                default: 350,
-                min: 100,
-                max: DATASET_SIZE - 100,
+                default: 50,
+                min: 10,
+                max: 90,
+                step: 1,
             }
         },
-        learning: {
-            rate: {
-                // default: 0.1,
-                default: 0.5, // default for 16x16
-                min: 0.01,
-                max: 10
+        learning_rate: {
+            start: {
+                default: 0.7,
+                min: 0.3,
+                max: 5,
+                step: 0.1,
+            },
+            end: {
+                default: 0.5,
+                min: 0.1,
+                max: 5,
+                step: 0.1,
             }
+        },
+        epochs: {
+            default: 1000, // default for 16x16
+            min: 100,
+            max: 3000,
+            step: 100,
         }
     },
     visuals: {
+        labels: {
+            valid: {
+                malignant: 'TP', // true positive
+                benign: 'TN' // true negative
+            },
+            invalid: {
+                malignant: 'FP', // true positive
+                benign: 'FN' // true negative
+            },
+        },
         colors: {
-            global_accuracy: 'rgb(0, 0, 0)',
+            global_accuracy: {
+                default: 'black',
+                background: 'white'
+            },
             diagnosis: {
                 valid: {
                     malignant: 'rgb(153, 204, 255)',
@@ -75,7 +101,8 @@ export default {
                     malignant: 'rgb(255, 153, 153)',
                     benign: 'rgb(255, 204, 153)'
                 },
-            }
+            },
+            default: "#eee"
         },
         layers: {
             dimensions: {
