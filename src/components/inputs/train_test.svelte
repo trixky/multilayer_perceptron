@@ -6,7 +6,7 @@
 
 <!-- ======================================== CONTENT -->
 <div class="train-test-container">
-	<h3>train/test dataset ratio</h3>
+	<p>train/test dataset ratio</p>
 	<div class="range-container">
 		<p class="value">{$TrainRatio}</p>
 		<input
@@ -25,8 +25,8 @@
 		@apply w-fit m-auto text-center mb-5;
 	}
 
-	h3 {
-		@apply text-sm;
+	p {
+		@apply text-sm mb-1;
 	}
 
 	.range-container {
@@ -34,7 +34,7 @@
 	}
 
 	.range-container > p {
-		@apply pb-1;
+		@apply m-0  opacity-40;
 	}
 
 	input[type='range'] {
