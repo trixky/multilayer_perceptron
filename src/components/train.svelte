@@ -16,6 +16,7 @@
 	import LearningRateEndStore from '../stores/learning_rate_end';
 	import ProgressStore from '../stores/progress'
 	import PredictionStore from '../stores/prediction'
+	import Download from '../components/inputs/download.svelte'
 
 	let epoch_index = -1;
 
@@ -101,6 +102,7 @@
 		</p>
 	</div>
 	<TrainVisual />
+	<Download />
 </div>
 
 <!-- ======================================== STYLE -->

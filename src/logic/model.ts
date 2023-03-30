@@ -8,16 +8,15 @@ import { softmax } from "./functions/softmax";
 import { derivated_binary_cross_entropy_wrt_softmax_input } from "./functions/bce";
 import { derivate_sigmoid } from "../models/derivation";
 import type AccuracyModel from "../models/accuracy";
+import type WeightModel from '../models/weight'
+import type ModelBackupModel from '../models/backup'
 
-interface LearnedWeights {
-    hidden_layers: Array<Array<Array<number>>>,
-    output_layer: Array<Array<number>>,
-}
+
 
 export default class Model {
     private hidden_layers: Array<LayerModel>;
     private output_layer: LayerModel
-    private learned_weights: Array<LearnedWeights>;
+    private learned_weights: Array<WeightModel>;
 
     // =========================================================== Constructor / copy / randomize
     // =================================
@@ -84,6 +83,26 @@ export default class Model {
                 output: perceptron.output
             })
         }
+    }
+
+    // =========================================================== Import / Export
+    // =================================
+    // ==================
+
+    // export exports a model from a backup
+    export(): ModelBackupModel {
+        return <ModelBackupModel>{
+            hidden_layers: this.hidden_layers,
+            output_layer: this.output_layer,
+            learned_weights: this.learned_weights,
+        }
+    }
+
+    // import imports a model from a backup
+    import(model_backup: ModelBackupModel) {
+        this.hidden_layers = model_backup.hidden_layers
+        this.output_layer = model_backup.output_layer
+        this.learned_weights = model_backup.learned_weights
     }
 
     // =========================================================== Getter / Setter
@@ -286,7 +305,7 @@ export default class Model {
             )
         })
 
-        this.learned_weights.push(<LearnedWeights>{
+        this.learned_weights.push(<WeightModel>{
             hidden_layers: learned_weights_hidden_layers,
             output_layer: learned_weight_output_layer,
         })

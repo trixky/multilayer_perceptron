@@ -20,7 +20,6 @@
 		],
 		datasets: [
 			{
-				label: 'My First Dataset',
 				data: generate_default_data(),
 				backgroundColor: [
 					Config.visuals.colors.diagnosis.valid.benign,
