@@ -64,7 +64,7 @@
 						($LearningRateEndStore - $LearningRateStartStore) * (progression_percentage / 100);
 
 					// Train the model
-					model.train(training_patients);
+					model.train(training_patients, current_learning_rate);
 
 					// Get and update the accuracy
 					const accuracy = model.get_accuracy(training_patients);

@@ -200,13 +200,13 @@ export default class Model {
     // =================================
     // ==================
 
-    train(patients: Array<PatientModel>) {
+    train(patients: Array<PatientModel>, current_learning_rate: number) {
         this.learned_weights = []
 
         patients.forEach(patient => {
             this.forward(patient)
             this.backward(patient)
-            this.learn(patient)
+            this.learn(patient, current_learning_rate)
         })
 
         this.fit()
@@ -294,12 +294,12 @@ export default class Model {
         this.hidden_layers.reverse()
     }
 
-    private learn(patient: PatientModel) {
+    private learn(patient: PatientModel, current_learning_rate: number) {
         const inputs = this.hidden_layers[this.hidden_layers.length - 1].perceptrons.map(perceptron => perceptron.output)
 
         // ----------------------- Output layer
         const learned_weights_output_layer = this.output_layer.perceptrons.map(perceptron => {
-            const correction = Config.inputs.learning_rate.start.default * perceptron.error
+            const correction = current_learning_rate * perceptron.error
 
             // ------- weights
             const learned_weights = perceptron.weights.map((_, weight_index) =>
@@ -318,7 +318,7 @@ export default class Model {
             const inputs = first_hidden_layer ? patient.inputs : this.hidden_layers[hidden_layer_index - 1].perceptrons.map(perceptron => perceptron.output)
 
             return hidden_layer.perceptrons.map(perceptron => {
-                const correction = Config.inputs.learning_rate.start.default * perceptron.error
+                const correction = current_learning_rate * perceptron.error
 
                 // ------- weights
                 const learned_weights = perceptron.weights.map((_, weight_index) =>
