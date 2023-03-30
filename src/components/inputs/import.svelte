@@ -78,12 +78,6 @@
 
 <!-- ======================================== CONTENT -->
 <div class="export-container">
-	<div class="text-container">
-		<p class="left">
-			You can export the model with its attributes (layers, weights, bias, hyper-parameters), and
-			import it later.
-		</p>
-	</div>
 	<input
 		id={INPUT_FILE_ID}
 		class="hidden"

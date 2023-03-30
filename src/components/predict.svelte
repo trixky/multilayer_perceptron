@@ -48,16 +48,9 @@
 <!-- ======================================== CONTENT -->
 <div class="predict-container">
 	<h2>Prediction</h2>
-	<div class="text-container">
-		<p class="left">
-			The training phase use the trained model.<br />The model is tested (fowrward pass) on the
-			shuffled patients of the testing dataset. By comparaing the results of each patients with the
-			expected ones.
-		</p>
-	</div>
 	<Import />
 	<div class="text-container">
-		<p class="right">
+		<p class="left">
 			The training phase use the trained model.<br />The model is tested (fowrward pass) on the
 			shuffled patients of the testing dataset. By comparaing the results of each patients with the
 			expected ones.
