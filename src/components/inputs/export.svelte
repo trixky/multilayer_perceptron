@@ -3,7 +3,7 @@
 	import ModelStore from '../../stores/model';
 	import ProgressStore from '../../stores/progress';
 
-	function handle_download() {
+	function handle_export() {
         // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
 
 		if ($ModelStore != undefined) {
@@ -29,23 +29,23 @@
 </script>
 
 <!-- ======================================== CONTENT -->
-<div class="download-container">
+<div class="export-container">
 	<div class="text-container">
 		<p class="left">
-			You can download the model with its attributes (layers, weights, bias, hyper-parameters), and
+			You can export the model with its attributes (layers, weights, bias, hyper-parameters), and
 			import it later.
 		</p>
 	</div>
 	<button
 		class="classic-button"
-		on:click={handle_download}
-		disabled={$ModelStore == null || $ProgressStore}>download</button
+		on:click={handle_export}
+		disabled={$ModelStore == null || $ProgressStore}>export</button
 	>
 </div>
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
-	.download-container {
+	.export-container {
 		@apply relative flex flex-col m-auto w-full;
 	}
 </style>
