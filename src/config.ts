@@ -115,6 +115,7 @@ export default {
             },
             line_width: 0.3,
         },
+        sleep: 10
     },
     module: {
         random: {

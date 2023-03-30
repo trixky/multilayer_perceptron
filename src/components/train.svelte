@@ -1,6 +1,7 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
 	import { fade } from 'svelte/transition';
+	import Config from '../config'
 	import Parser from '../logic/parser';
 	import HiddenLayerCaracteristicStore from '../stores/hidden_layer';
 	import OutputLayerCaracteristicStore from '../stores/output_layer';
@@ -65,7 +66,7 @@
 					AccuracyStore.push(accuracy);
 
 					// Make a pause for the front
-					await sleep(10); // HARDCODED
+					await sleep(Config.visuals.sleep);
 				}
 
 				// Save the model
