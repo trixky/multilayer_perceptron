@@ -3,10 +3,9 @@ import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/
 import type PerceptronModel from "../models/perceptron";
 import type PatientModel from "../models/patient";
 import Config from '../config'
-import sigmoid from "./functions/sigmoid";
+import { sigmoid, sigmoid_derivate } from "./functions/sigmoid";
 import { softmax } from "./functions/softmax";
-import { derivated_binary_cross_entropy_wrt_softmax_input } from "./functions/bce";
-import { derivate_sigmoid } from "../models/derivation";
+import { binary_cross_entropy_wrt_softmax_input_derivate } from "./functions/bce";
 import type AccuracyModel from "../models/accuracy";
 import type WeightModel from '../models/weight'
 import type ModelBackupModel from '../models/backup'
@@ -268,7 +267,7 @@ export default class Model {
     // by comparing the patient result and the prediction
     private error_backpropagation_output_layer(patient: PatientModel) {
         // Compute the output layer errors using the derivated binary cross entropy wrt the softmax output
-        derivated_binary_cross_entropy_wrt_softmax_input(this.output_layer.perceptrons.map(perceptron => perceptron.output), [patient.diagnosis, !patient.diagnosis])
+        binary_cross_entropy_wrt_softmax_input_derivate(this.output_layer.perceptrons.map(perceptron => perceptron.output), [patient.diagnosis, !patient.diagnosis])
             // Update the output layer errors
             .forEach((bce_error, bce_error_index) => {
                 this.output_layer.perceptrons[bce_error_index].error = bce_error
@@ -286,7 +285,7 @@ export default class Model {
                 current_perceptron.error = 0
 
                 next_layer.perceptrons.forEach(next_perceptron => {
-                    current_perceptron.error += next_perceptron.weights[current_perceptron_index] * next_perceptron.error * derivate_sigmoid(next_perceptron.output)
+                    current_perceptron.error += next_perceptron.weights[current_perceptron_index] * next_perceptron.error * sigmoid_derivate(next_perceptron.output)
                 })
             })
         })
