@@ -67,12 +67,16 @@ export default {
                 min: 0.1,
                 max: 5,
                 step: 0.1,
+            },
+            bias: {
+                inputs_factor: 1,
+                limiter: 0.3
             }
         },
         epochs: {
-            default: 1000, // default for 16x16
+            default: 500, // default for 16x16
             min: 100,
-            max: 3000,
+            max: 2000,
             step: 100,
         }
     },

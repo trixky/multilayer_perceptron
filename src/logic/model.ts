@@ -11,8 +11,6 @@ import type AccuracyModel from "../models/accuracy";
 import type WeightModel from '../models/weight'
 import type ModelBackupModel from '../models/backup'
 
-
-
 export default class Model {
     private hidden_layer_caracteristics: Array<LayerCaracteristicsModel>
     private output_layer_caracteristics: LayerCaracteristicsModel
@@ -219,7 +217,7 @@ export default class Model {
     // ==================
 
     private forward(patient: PatientModel) {
-        // ----------------------- Forward hidden layers
+        // ----------------------- Output layer
         this.hidden_layers.forEach((hidden_layer, hidden_layer_index) => {
             // For each layer of the model
             const first_hidden_layer = hidden_layer_index == 0
@@ -234,7 +232,7 @@ export default class Model {
             })
         })
 
-        // ----------------------- Forward output layers
+        // ----------------------- Hidden layers
         const last_hidden_layer = this.hidden_layers[this.hidden_layers.length - 1]
         const inputs = last_hidden_layer.perceptrons.map(perceptron => perceptron.output)
 
@@ -299,44 +297,73 @@ export default class Model {
     private learn(patient: PatientModel) {
         const inputs = this.hidden_layers[this.hidden_layers.length - 1].perceptrons.map(perceptron => perceptron.output)
 
-        const learned_weight_output_layer = this.output_layer.perceptrons.map(perceptron =>
-            perceptron.weights.map((_, weight_index) => perceptron.weights[weight_index] - Config.inputs.learning_rate.start.default * perceptron.error * inputs[weight_index])
-        )
+        // ----------------------- Output layer
+        const learned_weights_output_layer = this.output_layer.perceptrons.map(perceptron => {
+            const correction = Config.inputs.learning_rate.start.default * perceptron.error
 
+            // ------- weights
+            const learned_weights = perceptron.weights.map((_, weight_index) =>
+                perceptron.weights[weight_index] - correction * inputs[weight_index])
+
+            // ------- bias
+            const learned_bias = perceptron.bias - correction * Config.inputs.learning_rate.bias.inputs_factor * Config.inputs.learning_rate.bias.limiter
+
+            return [...learned_weights, learned_bias]
+        })
+
+
+        // ----------------------- Hidden layers
         const learned_weights_hidden_layers = this.hidden_layers.map((hidden_layer, hidden_layer_index) => {
             const first_hidden_layer = hidden_layer_index == 0
             const inputs = first_hidden_layer ? patient.inputs : this.hidden_layers[hidden_layer_index - 1].perceptrons.map(perceptron => perceptron.output)
 
-            return hidden_layer.perceptrons.map(perceptron =>
-                perceptron.weights.map((_, weight_index) =>
-                    perceptron.weights[weight_index] - Config.inputs.learning_rate.start.default * perceptron.error * inputs[weight_index]
+            return hidden_layer.perceptrons.map(perceptron => {
+                const correction = Config.inputs.learning_rate.start.default * perceptron.error
+
+                // ------- weights
+                const learned_weights = perceptron.weights.map((_, weight_index) =>
+                    perceptron.weights[weight_index] - correction * inputs[weight_index]
                 )
-            )
+                // ------- bias
+                const learned_bias = perceptron.bias - correction * Config.inputs.learning_rate.bias.inputs_factor * Config.inputs.learning_rate.bias.limiter
+
+                return [...learned_weights, learned_bias]
+            })
         })
 
         this.learned_weights.push(<WeightModel>{
             hidden_layers: learned_weights_hidden_layers,
-            output_layer: learned_weight_output_layer,
+            output_layer: learned_weights_output_layer,
         })
     }
 
     // fit updates the weight of the model to fit with the expected result using the calculated errors
     private fit() {
+        // ----------------------- Ouput layer
         this.output_layer.perceptrons.forEach((perceptron, perceptron_index) => {
+            // ------- weights
             perceptron.weights.forEach((_, weight_index) => {
                 this.output_layer.perceptrons[perceptron_index].weights[weight_index] = this.learned_weights
                     .map(learned_weights => learned_weights.output_layer[perceptron_index][weight_index])
-                    .reduce((a, b) => a + b) / this.learned_weights.length
+                    .reduce((a, b) => a + b) / (this.learned_weights.length)
             });
+
+            // ------- bias
+            this.output_layer.perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.output_layer[perceptron_index][learned_weights.output_layer[perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
         })
 
+        // ----------------------- Hidden layers
         this.hidden_layers.forEach((hiddeen_layer, hidden_layer_index) =>
             hiddeen_layer.perceptrons.forEach((perceptron, perceptron_index) => {
+                // ------- weights
                 perceptron.weights.forEach((_, weight_index) => {
                     this.hidden_layers[hidden_layer_index].perceptrons[perceptron_index].weights[weight_index] = this.learned_weights
                         .map(learned_weights => learned_weights.hidden_layers[hidden_layer_index][perceptron_index][weight_index])
-                        .reduce((a, b) => a + b) / this.learned_weights.length
+                        .reduce((a, b) => a + b) / (this.learned_weights.length)
                 });
+
+                // ------- bias
+                this.hidden_layers[hidden_layer_index].perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.hidden_layers[hidden_layer_index][perceptron_index][learned_weights.hidden_layers[hidden_layer_index][perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
             }))
     }
 }
