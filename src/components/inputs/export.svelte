@@ -1,5 +1,6 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
+	import Config from '../../config'
 	import ModelStore from '../../stores/model';
 	import ProgressStore from '../../stores/progress';
 
@@ -7,7 +8,7 @@
         // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
 
 		if ($ModelStore != undefined) {
-			const filename = 'bakcup.json';
+			const filename = Config.backup.file.name + Config.backup.file.extension;
 			const backup_model = $ModelStore.export();
 
 			const backup_model_data = JSON.stringify(backup_model);

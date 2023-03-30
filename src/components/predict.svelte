@@ -1,18 +1,46 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
-    import ModelStore from "../stores/model";
-	import PredictVisual from './visual/predict.svelte'
-	import ProgressStore from '../stores/progress'
-	import PredictionStore from '../stores/prediction'
-	import PatientStore from '../stores/patient'
-	import TrainTestRatioStore from '../stores/train_test_ratio'
+	import ModelStore from '../stores/model';
+	import PredictVisual from './visual/predict.svelte';
+	import ProgressStore from '../stores/progress';
+	import PredictionStore from '../stores/prediction';
+	import PatientStore from '../stores/patient';
+	import TrainTestRatioStore from '../stores/train_test_ratio';
+	import Import from '../components/inputs/import.svelte';
+	import Parser from '../logic/parser';
 
-	function handle_run() {
+	function predict() {
 		if ($ModelStore != null) {
-			const prediction_patients = $PatientStore.slice(0, Math.floor($PatientStore.length * $TrainTestRatioStore / 100));
-			
-			const prediction = $ModelStore.get_accuracy(prediction_patients)
-			PredictionStore.set(prediction)
+			const prediction_patients = $PatientStore.slice(
+				0,
+				Math.floor(($PatientStore.length * $TrainTestRatioStore) / 100)
+			);
+
+			const prediction = $ModelStore.get_accuracy(prediction_patients);
+			PredictionStore.set(prediction);
+		}
+	}
+
+	function handle_predict() {
+		if ($ModelStore != null) {
+			if ($PatientStore.length === 0) {
+				fetch('/data.csv').then((v) => {
+					v.text().then(async (txt) => {
+						// Reset prediction
+						PredictionStore.reset();
+
+						// Initialize patients
+						const patients = Parser(txt);
+
+						PatientStore.set(patients);
+						PatientStore.normalize_min_max();
+						PatientStore.shuffle();
+						predict();
+					});
+				});
+			} else {
+				predict();
+			}
 		}
 	}
 </script>
@@ -22,19 +50,24 @@
 	<h2>Prediction</h2>
 	<div class="text-container">
 		<p class="left">
-			The training phase use the trained model.<br>The model is tested (fowrward pass)
-			on the shuffled patients of the testing dataset. By comparaing the results of each patients with the
+			The training phase use the trained model.<br />The model is tested (fowrward pass) on the
+			shuffled patients of the testing dataset. By comparaing the results of each patients with the
 			expected ones.
 		</p>
 	</div>
-	<button class="classic-button" on:click={handle_run} disabled={$ModelStore == null || $ProgressStore}>predict</button>
+	<Import />
 	<div class="text-container">
 		<p class="right">
-			The training phase use the trained model.<br>The model is tested (fowrward pass)
-			on the shuffled patients of the testing dataset. By comparaing the results of each patients with the
+			The training phase use the trained model.<br />The model is tested (fowrward pass) on the
+			shuffled patients of the testing dataset. By comparaing the results of each patients with the
 			expected ones.
 		</p>
 	</div>
+	<button
+		class="classic-button"
+		on:click={handle_predict}
+		disabled={$ModelStore == null || $ProgressStore || $PredictionStore != null}>predict</button
+	>
 	<PredictVisual />
 </div>
 

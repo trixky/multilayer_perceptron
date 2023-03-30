@@ -128,5 +128,11 @@ export default {
         log: {
             clip: 1e-15
         }
+    },
+    backup: {
+        file: {
+            name: "backup",
+            extension: ".model.json"
+        }
     }
 }

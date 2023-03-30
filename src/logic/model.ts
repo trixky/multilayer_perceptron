@@ -14,6 +14,9 @@ import type ModelBackupModel from '../models/backup'
 
 
 export default class Model {
+    private hidden_layer_caracteristics: Array<LayerCaracteristicsModel>
+    private output_layer_caracteristics: LayerCaracteristicsModel
+
     private hidden_layers: Array<LayerModel>;
     private output_layer: LayerModel
     private learned_weights: Array<WeightModel>;
@@ -24,6 +27,7 @@ export default class Model {
 
     constructor(hidden_layer_caracteristics: Array<LayerCaracteristicsModel>, output_layer_caracteristics: LayerCaracteristicsModel) {
         // ----------------------- Initialize hidden layers
+        this.hidden_layer_caracteristics = hidden_layer_caracteristics
         this.hidden_layers = Array(hidden_layer_caracteristics.length).fill(null)
         hidden_layer_caracteristics.forEach((hidden_layer_caracteristic, hidden_layer_caracteristic_index) => {
             const first_hidden_layer = hidden_layer_caracteristic_index == 0
@@ -41,6 +45,7 @@ export default class Model {
         })
 
         // ----------------------- Initialize output layers
+        this.output_layer_caracteristics = output_layer_caracteristics
         const last_hidden_layer = hidden_layer_caracteristics[hidden_layer_caracteristics.length - 1]
         this.output_layer = <LayerModel>{
             caracteristics: output_layer_caracteristics,
@@ -52,7 +57,7 @@ export default class Model {
             })
         }
 
-        // ----------------------- Initialize output layers
+        // ----------------------- Initialize learned weights layers
         this.learned_weights = []
 
         // ----------------------- Randomize hidden and output layers
@@ -92,6 +97,8 @@ export default class Model {
     // export exports a model from a backup
     export(): ModelBackupModel {
         return <ModelBackupModel>{
+            hidden_layer_caracteristics: this.hidden_layer_caracteristics,
+            output_layer_caracteristics: this.output_layer_caracteristics,
             hidden_layers: this.hidden_layers,
             output_layer: this.output_layer,
             learned_weights: this.learned_weights,
@@ -100,6 +107,8 @@ export default class Model {
 
     // import imports a model from a backup
     import(model_backup: ModelBackupModel) {
+        this.hidden_layer_caracteristics = model_backup.hidden_layer_caracteristics
+        this.output_layer_caracteristics = model_backup.output_layer_caracteristics
         this.hidden_layers = model_backup.hidden_layers
         this.output_layer = model_backup.output_layer
         this.learned_weights = model_backup.learned_weights
