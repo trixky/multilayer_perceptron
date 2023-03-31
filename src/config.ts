@@ -1,4 +1,5 @@
-import { Functions } from "./models/layer"
+import type { bundle_types as FunctionBundleTypes } from './logic/functions/activation/bundles'
+import { softmax } from './logic/functions/error/softmax'
 
 const DATASET_SIZE = 569
 
@@ -35,7 +36,7 @@ export default {
                 }
             },
             function: {
-                default: Object.keys(Functions)[Object.values(Functions).indexOf(Functions.sigmoid)]
+                default: <FunctionBundleTypes>"sigmoid"
             }
         },
         output_layer: {
@@ -43,7 +44,10 @@ export default {
                 default: 2
             },
             function: {
-                default: Object.keys(Functions)[Object.values(Functions).indexOf(Functions.sigmoid)]
+                default: {
+                    label: "softmax",
+                    function: softmax,
+                }
             }
         },
         dataset: {
@@ -53,20 +57,32 @@ export default {
                 min: 10,
                 max: 90,
                 step: 1,
+            },
+            slope: {
+                default: 0.5,
+                min: 0,
+                max: 1,
+                step: 0.01,
+            },
+            scaling_factor: {
+                default: 0.5,
+                min: 0,
+                max: 1,
+                step: 0.01,
             }
         },
         learning_rate: {
             start: {
                 default: 0.7,
-                min: 0.3,
-                max: 5,
-                step: 0.1,
+                min: 0.05,
+                max: 3,
+                step: 0.05,
             },
             end: {
                 default: 0.5,
-                min: 0.1,
-                max: 5,
-                step: 0.1,
+                min: 0.05,
+                max: 3,
+                step: 0.05,
             },
             bias: {
                 inputs_factor: 1,

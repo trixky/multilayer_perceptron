@@ -1,13 +1,14 @@
 import { writable } from 'svelte/store';
 import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/layer';
-import { Functions } from '../models/layer';
+import { bundles as FunctionBundles } from '../logic/functions/activation/bundles'
+import type { bundle_types as FunctionBundleTypes } from '../logic/functions/activation/bundles'
 
 import Config from '../config'
 
 function new_default_hidden_layer(): LayerCaracteristicsModel {
     return <LayerCaracteristicsModel>{
         size: Config.inputs.hidden_layers.size.default,
-        function: Config.inputs.hidden_layers.function.default
+        function: FunctionBundles[Config.inputs.hidden_layers.function.default]
     }
 }
 
@@ -90,11 +91,11 @@ function create_hidden_layer_caracteristic_store() {
         change_layer_function: (index: number) => {
             update(hidden_layers => {
                 if (index < hidden_layers.length && hidden_layers[index].function != null) {
-                    const function_index = Object.values(Functions).indexOf(hidden_layers[index].function)
-                    const new_function_index = (function_index + 1) % Object.values(Functions).length
+                    const function_bundles_keys = Object.keys(FunctionBundles)
+                    const function_index = function_bundles_keys.findIndex(function_bundle => function_bundle === hidden_layers[index].function.name)
+                    const new_function_index = (function_index + 1) % function_bundles_keys.length
 
-                    hidden_layers[index].function = Object.values(Functions)[new_function_index]
-
+                    hidden_layers[index].function = FunctionBundles[function_bundles_keys[new_function_index] as FunctionBundleTypes]
                 }
 
                 return hidden_layers
@@ -145,7 +146,8 @@ function create_hidden_layer_caracteristic_store() {
 
             for (let i = 0; i < random_hidden_layer_nbr; i++) {
                 // Find a random function
-                const random_function = Object.values(Functions)[(Math.floor(Math.random() * Object.keys(Functions).length))];
+                const function_bundles_values = Object.values(FunctionBundles)
+                const random_function = function_bundles_values[(Math.floor(Math.random() * function_bundles_values.length))];
 
                 // Find a random layer size
                 let random_size = Math.ceil(Math.random() * (Config.inputs.hidden_layers.size.max - Config.inputs.hidden_layers.size.min)) + Config.inputs.hidden_layers.size.min;

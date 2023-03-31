@@ -3,16 +3,15 @@ import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/
 import type PerceptronModel from "../models/perceptron";
 import type PatientModel from "../models/patient";
 import Config from '../config'
-import { sigmoid, sigmoid_derivate } from "./functions/sigmoid";
-import { softmax } from "./functions/softmax";
-import { binary_cross_entropy_wrt_softmax_input_derivate } from "./functions/bce";
+import { sigmoid, sigmoid_derivate } from "./functions/activation/sigmoid";
+import { softmax } from "./functions/error/softmax";
+import { binary_cross_entropy_wrt_softmax_input_derivate } from "./functions/error/bce";
 import type AccuracyModel from "../models/accuracy";
 import type WeightModel from '../models/weight'
 import type ModelBackupModel from '../models/backup'
 
 export default class Model {
     private hidden_layer_caracteristics: Array<LayerCaracteristicsModel>
-    private output_layer_caracteristics: LayerCaracteristicsModel
 
     private hidden_layers: Array<LayerModel>;
     private output_layer: LayerModel
@@ -22,7 +21,7 @@ export default class Model {
     // =================================
     // ==================
 
-    constructor(hidden_layer_caracteristics: Array<LayerCaracteristicsModel>, output_layer_caracteristics: LayerCaracteristicsModel) {
+    constructor(hidden_layer_caracteristics: Array<LayerCaracteristicsModel>) {
         // ----------------------- Initialize hidden layers
         this.hidden_layer_caracteristics = hidden_layer_caracteristics
         this.hidden_layers = Array(hidden_layer_caracteristics.length).fill(null)
@@ -42,11 +41,9 @@ export default class Model {
         })
 
         // ----------------------- Initialize output layers
-        this.output_layer_caracteristics = output_layer_caracteristics
         const last_hidden_layer = hidden_layer_caracteristics[hidden_layer_caracteristics.length - 1]
         this.output_layer = <LayerModel>{
-            caracteristics: output_layer_caracteristics,
-            perceptrons: Array(output_layer_caracteristics.size).fill(null).map(_ => <PerceptronModel>{
+            perceptrons: Array(Config.inputs.output_layer.size.default).fill(null).map(_ => <PerceptronModel>{
                 bias: 0,
                 weights: Array(last_hidden_layer.size).fill(null).map(_ => 0),
                 output: 0,
@@ -95,7 +92,6 @@ export default class Model {
     export(): ModelBackupModel {
         return <ModelBackupModel>{
             hidden_layer_caracteristics: this.hidden_layer_caracteristics,
-            output_layer_caracteristics: this.output_layer_caracteristics,
             hidden_layers: this.hidden_layers,
             output_layer: this.output_layer,
             learned_weights: this.learned_weights,
@@ -105,7 +101,6 @@ export default class Model {
     // import imports a model from a backup
     import(model_backup: ModelBackupModel) {
         this.hidden_layer_caracteristics = model_backup.hidden_layer_caracteristics
-        this.output_layer_caracteristics = model_backup.output_layer_caracteristics
         this.hidden_layers = model_backup.hidden_layers
         this.output_layer = model_backup.output_layer
         this.learned_weights = model_backup.learned_weights
@@ -216,7 +211,7 @@ export default class Model {
     // ==================
 
     private forward(patient: PatientModel) {
-        // ----------------------- Output layer
+        // ----------------------- Hidden layers
         this.hidden_layers.forEach((hidden_layer, hidden_layer_index) => {
             // For each layer of the model
             const first_hidden_layer = hidden_layer_index == 0
@@ -225,22 +220,24 @@ export default class Model {
             // compute and active the outputs
             hidden_layer.perceptrons.forEach(perceptron => {
                 const weighed_inputs = perceptron.weights.map((weight, weight_index) => weight * inputs[weight_index]).reduce((a, b) => a + b, 0)
-                const bias = perceptron.bias
+                // const bias = perceptron.bias
 
-                perceptron.output = sigmoid(weighed_inputs + bias)
+                // perceptron.output = sigmoid(weighed_inputs + bias)
+                perceptron.output = sigmoid(weighed_inputs)
             })
         })
 
-        // ----------------------- Hidden layers
+        // ----------------------- Output layer
         const last_hidden_layer = this.hidden_layers[this.hidden_layers.length - 1]
         const inputs = last_hidden_layer.perceptrons.map(perceptron => perceptron.output)
 
         // compute the outputs
         this.output_layer.perceptrons.forEach(perceptron => {
             const weighed_inputs = perceptron.weights.map((weight, weight_index) => weight * inputs[weight_index]).reduce((a, b) => a + b, 0)
-            const bias = perceptron.bias
+            // const bias = perceptron.bias
 
-            perceptron.output = weighed_inputs + bias
+            perceptron.output = weighed_inputs
+            // perceptron.output = weighed_inputs + bias
         })
 
         const unactivated_outputs = this.output_layer.perceptrons.map(perceptron => perceptron.output)
@@ -348,7 +345,7 @@ export default class Model {
             });
 
             // ------- bias
-            this.output_layer.perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.output_layer[perceptron_index][learned_weights.output_layer[perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
+            // this.output_layer.perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.output_layer[perceptron_index][learned_weights.output_layer[perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
         })
 
         // ----------------------- Hidden layers
@@ -362,7 +359,7 @@ export default class Model {
                 });
 
                 // ------- bias
-                this.hidden_layers[hidden_layer_index].perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.hidden_layers[hidden_layer_index][perceptron_index][learned_weights.hidden_layers[hidden_layer_index][perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
+                // this.hidden_layers[hidden_layer_index].perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.hidden_layers[hidden_layer_index][perceptron_index][learned_weights.hidden_layers[hidden_layer_index][perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
             }))
     }
 }

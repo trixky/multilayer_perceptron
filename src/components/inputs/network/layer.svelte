@@ -1,7 +1,6 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
 	import HiddenLayerStore from '../../../stores/hidden_layer';
-	import OutputLayerStore from '../../../stores/output_layer';
 	import Config from '../../../config';
 	import type { LayerCaracteristics as LayerCaracteristicsModel } from '../../../models/layer';
 	import ProgressStore from '../../../stores/progress';
@@ -30,9 +29,7 @@
 	}
 
 	function handle_change_function(index: number) {
-		if (output_layer) {
-			OutputLayerStore.change_layer_function(index);
-		} else {
+		if (!output_layer) {
 			HiddenLayerStore.change_layer_function(index);
 		}
 	}
@@ -83,7 +80,7 @@
 		<div class="hidden-layer-caracteristic-input">
 			{#if caracterisics != undefined || output_layer}
 				<p class="function">
-					{caracterisics != undefined ? caracterisics.function : $OutputLayerStore.function}
+					{caracterisics != undefined ? caracterisics.function.label : Config.inputs.output_layer.function.default.label}
 				</p>
 				<div class="hidden-layer-caracteristic-input-modificator">
 					<button

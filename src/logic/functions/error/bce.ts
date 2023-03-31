@@ -1,7 +1,6 @@
-import Config from '../../config'
-
 // cross_entropy_cost is the cross entropy cost mathematical function implementation
 export function binary_cross_entropy(outputs: number[], expected: boolean[]): number[] {
+    // Sources:
     // https://www.youtube.com/watch?v=Md4b67HvmRo&t=614s&ab_channel=DigitalSreeni
     // https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a
 
@@ -12,6 +11,7 @@ export function binary_cross_entropy(outputs: number[], expected: boolean[]): nu
 
 // binary_cross_entropy_wrt_softmax_input_derivate computes the derivative of the binary cross entropy function wrt the softmax function
 export function binary_cross_entropy_wrt_softmax_input_derivate(outputs: number[], expected: boolean[]): number[] {
+    // Sources:
     // https://www.mldawn.com/back-propagation-with-cross-entropy-and-softmax/
 
     return outputs.map((output, output_index) => {
@@ -21,13 +21,16 @@ export function binary_cross_entropy_wrt_softmax_input_derivate(outputs: number[
 
 // softmax_bce_derivate compute the derivate of an ouput for the output layer according to its expected result
 export function softmax_bce_derivate(output: number, expected: number): number {
+    // Sources:
     // https://www.mldawn.com/back-propagation-with-cross-entropy-and-softmax/
+
     return output - expected
 }
 
 
 // ----------------------------------- test
 
+// Sources:
 // https://lindevs.com/calculate-binary-cross-entropy-using-tensorflow-2
 
 // const outputs = [0.8, 0.2, 0.6, 0.9]

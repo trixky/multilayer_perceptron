@@ -4,7 +4,6 @@
 	import Config from '../config';
 	import Parser from '../logic/parser';
 	import HiddenLayerCaracteristicStore from '../stores/hidden_layer';
-	import OutputLayerCaracteristicStore from '../stores/output_layer';
 	import TrainTestRatioStore from '../stores/train_test_ratio';
 	import ModelClass from '../logic/model';
 	import AccuracyStore from '../stores/accuracy';
@@ -48,7 +47,6 @@
 				ModelStore.reset();
 				const model = new ModelClass(
 					$HiddenLayerCaracteristicStore,
-					$OutputLayerCaracteristicStore
 				);
 
 				// Initialize accuracy

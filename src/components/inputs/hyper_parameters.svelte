@@ -5,6 +5,8 @@
 	import LearningRateEndStore from '../../stores/learning_rate_end';
 	import EpochStore from '../../stores/epoch';
 	import TrainTestRatio from '../../stores/train_test_ratio';
+	import SlopeRatio from '../../stores/slope'
+	import ScalingFactor from '../../stores/scaling_factor'
 	import ProgressStore from '../../stores/progress';
 
 	function handle_range_learning_rate(e: any) {
@@ -22,6 +24,14 @@
 	function handle_range_dataset_ratio(e: any) {
 		TrainTestRatio.set(+e.target.value);
 	}
+
+	function handle_slope(e: any) {
+		SlopeRatio.set(+e.target.value)
+	}
+
+	function handle_scaling_factor(e: any) {
+		ScalingFactor.set(+e.target.value)
+	}
 </script>
 
 <!-- ======================================== CONTENT -->
@@ -38,7 +48,7 @@
 				value={$LearningRateStartStore}
 				disabled={$ProgressStore}
 			/>
-			<p class="value">x {$LearningRateStartStore}</p>
+			<p class="value">x {$LearningRateStartStore.toFixed(2)}</p>
 			<p class="label">learning rate</p>
 		</div>
 		<div class="input-container">
@@ -51,7 +61,7 @@
 				value={$LearningRateEndStore}
 				disabled={$ProgressStore}
 			/>
-			<p class="value">x {$LearningRateEndStore}</p>
+			<p class="value">x {$LearningRateEndStore.toFixed(2)}</p>
 			<p class="label">final learning rate</p>
 		</div>
 		<div class="input-container">
@@ -66,6 +76,32 @@
 			/>
 			<p class="value">{$EpochStore}</p>
 			<p class="label">epochs</p>
+		</div>
+		<div class="input-container">
+			<input
+				type="range"
+				min={Config.inputs.dataset.slope.min}
+				max={Config.inputs.dataset.slope.max}
+				step={Config.inputs.dataset.slope.step}
+				on:input={handle_slope}
+				value={$SlopeRatio}
+				disabled={$ProgressStore}
+			/>
+			<p class="value">{$SlopeRatio.toFixed(2)}</p>
+			<p class="label">leaky coefficient (slope)</p>
+		</div>
+		<div class="input-container">
+			<input
+				type="range"
+				min={Config.inputs.dataset.scaling_factor.min}
+				max={Config.inputs.dataset.scaling_factor.max}
+				step={Config.inputs.dataset.scaling_factor.step}
+				on:input={handle_scaling_factor}
+				value={$ScalingFactor}
+				disabled={$ProgressStore}
+			/>
+			<p class="value">{$ScalingFactor.toFixed(2)}</p>
+			<p class="label">scaling factor</p>
 		</div>
 		<div class="input-container">
 			<input

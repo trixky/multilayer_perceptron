@@ -1,14 +1,9 @@
 import type PerceptronModel from "./perceptron"
-
-export enum Functions {
-    sigmoid = "sigmoid", // sigmoid
-    hyperboloid_tangent = "hyperboloid", // hyperboloid tangent
-    rectified_linear_unit = "retified-l-u", // rectified linear unit
-}
+import type FunctionModel from './function'
 
 export interface LayerCaracteristics {
     size: number,
-    function: Functions,
+    function: FunctionModel,
 }
 
 export interface Layer {

@@ -1,7 +1,6 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
 	import HiddenLayerStore from '../../../stores/hidden_layer';
-	import OutputLayerStore from '../../../stores/output_layer';
 	import InputNetworkLayer from './layer.svelte';
 	import Config from '../../../config';
 
@@ -11,7 +10,6 @@
 
 	function handle_randomize() {
 		HiddenLayerStore.randomize();
-		OutputLayerStore.randomize();
 	}
 </script>
 

@@ -2,7 +2,7 @@ import type PatientModel from "../models/patient";
 import type { PatientPrediction as PatientPredictionModel, MiniBatchPrediction as MiniBatchPredictionModel } from "../models/prediction";
 import type OutputCostModel from "../models/output_cost";
 import type MiniBatchModel from "../models/mini_batch";
-import { binary_cross_entropy } from "./functions/bce";
+import { binary_cross_entropy } from "./functions/error/bce";
 
 // estimate_patient_output_layer_cost estimates the cost of each perceptron output
 // of the output layer by comparing the patient result and the prediction
