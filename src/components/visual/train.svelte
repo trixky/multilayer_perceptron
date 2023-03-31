@@ -36,17 +36,17 @@
 	function reset_datasets() {
 		return [
 			{
-				label: Config.visuals.labels.valid.malignant,
-				data: <Array<number>>[],
-				borderColor: Config.visuals.colors.diagnosis.valid.malignant,
-				backgroundColor: Config.visuals.colors.diagnosis.valid.malignant,
-				yAxisID: 'y'
-			},
-			{
 				label: Config.visuals.labels.valid.benign,
 				data: <Array<number>>[],
 				borderColor: Config.visuals.colors.diagnosis.valid.benign,
 				backgroundColor: Config.visuals.colors.diagnosis.valid.benign,
+				yAxisID: 'y'
+			},
+			{
+				label: Config.visuals.labels.valid.malignant,
+				data: <Array<number>>[],
+				borderColor: Config.visuals.colors.diagnosis.valid.malignant,
+				backgroundColor: Config.visuals.colors.diagnosis.valid.malignant,
 				yAxisID: 'y'
 			},
 			{
