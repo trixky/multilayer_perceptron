@@ -222,8 +222,7 @@ export default class Model {
                 const weighed_inputs = perceptron.weights.map((weight, weight_index) => weight * inputs[weight_index]).reduce((a, b) => a + b, 0)
                 const bias = perceptron.bias
 
-                perceptron.output = SigmoidBundle.activation(weighed_inputs + bias)
-                // perceptron.output = hidden_layer.caracteristics.function.activation(weighed_inputs)
+                perceptron.output = this.hidden_layer_caracteristics[hidden_layer_index].function.activation(weighed_inputs + bias)
             })
         })
 
@@ -281,7 +280,7 @@ export default class Model {
                 current_perceptron.error = 0
 
                 next_layer.perceptrons.forEach(next_perceptron => {
-                    current_perceptron.error += next_perceptron.weights[current_perceptron_index] * next_perceptron.error * SigmoidBundle.derivative(next_perceptron.output)
+                    current_perceptron.error += next_perceptron.weights[current_perceptron_index] * next_perceptron.error * this.hidden_layer_caracteristics[hidden_layer_index].function.derivative(next_perceptron.output)
                 })
             })
         })
