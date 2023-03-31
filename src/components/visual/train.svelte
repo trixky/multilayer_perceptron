@@ -125,8 +125,8 @@
 		const new_dataset = $AccuracyStore[$AccuracyStore.length - 1];
 
 		// Update each line
-		data.datasets[1].data = [...data.datasets[1].data, new_dataset.net.valid.benign]; // Valid benign
-		data.datasets[0].data = [...data.datasets[0].data, new_dataset.net.valid.malignant]; // Valid malignant
+		data.datasets[0].data = [...data.datasets[0].data, new_dataset.net.valid.benign]; // Valid benign
+		data.datasets[1].data = [...data.datasets[1].data, new_dataset.net.valid.malignant]; // Valid malignant
 		data.datasets[2].data = [...data.datasets[2].data, new_dataset.net.invalid.malignant]; // Invalid malignant
 		data.datasets[3].data = [...data.datasets[3].data, new_dataset.net.invalid.benign]; // Invalid benign
 		data.datasets[4].data = [...data.datasets[4].data, new_dataset.mean * 100];
