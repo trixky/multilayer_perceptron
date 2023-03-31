@@ -18,7 +18,7 @@ export function sigmoid_derivate(z: number): number {
     return z * (1 - z)
 }
 
-export const sigmoid_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "sigmoid",
     label: "sigmoid",
     priority_luck: 100,

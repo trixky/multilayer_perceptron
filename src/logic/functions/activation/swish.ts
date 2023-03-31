@@ -18,7 +18,7 @@ export function swish_derivate(z: number, beta: number = Config.inputs.dataset.s
     return y + beta * y * (1 - y);
 }
 
-export const swish_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "swish",
     label: "swish",
     priority_luck: 3,

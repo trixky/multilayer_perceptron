@@ -17,7 +17,7 @@ export function hyperbolic_tangent_derivate(z: number): number {
     return 1 - tanhX * tanhX;
 }
 
-export const hyperbolic_tangent_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "hyperbolic_tangent",
     label: "hyperbolic",
     priority_luck: 3,

@@ -3,7 +3,7 @@ import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/
 import type PerceptronModel from "../models/perceptron";
 import type PatientModel from "../models/patient";
 import Config from '../config'
-import { sigmoid, sigmoid_derivate } from "./functions/activation/sigmoid";
+import SigmoidBundle from "./functions/activation/sigmoid";
 import { softmax } from "./functions/error/softmax";
 import { binary_cross_entropy_wrt_softmax_input_derivate } from "./functions/error/bce";
 import type AccuracyModel from "../models/accuracy";
@@ -220,10 +220,10 @@ export default class Model {
             // compute and active the outputs
             hidden_layer.perceptrons.forEach(perceptron => {
                 const weighed_inputs = perceptron.weights.map((weight, weight_index) => weight * inputs[weight_index]).reduce((a, b) => a + b, 0)
-                // const bias = perceptron.bias
+                const bias = perceptron.bias
 
-                // perceptron.output = sigmoid(weighed_inputs + bias)
-                perceptron.output = sigmoid(weighed_inputs)
+                perceptron.output = SigmoidBundle.activation(weighed_inputs + bias)
+                // perceptron.output = hidden_layer.caracteristics.function.activation(weighed_inputs)
             })
         })
 
@@ -282,7 +282,7 @@ export default class Model {
                 current_perceptron.error = 0
 
                 next_layer.perceptrons.forEach(next_perceptron => {
-                    current_perceptron.error += next_perceptron.weights[current_perceptron_index] * next_perceptron.error * sigmoid_derivate(next_perceptron.output)
+                    current_perceptron.error += next_perceptron.weights[current_perceptron_index] * next_perceptron.error * SigmoidBundle.derivative(next_perceptron.output)
                 })
             })
         })

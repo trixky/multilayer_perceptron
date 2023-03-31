@@ -10,7 +10,7 @@ export function bent_identity_derivate(z: number): number {
     return (z / (2 * Math.sqrt(z * z + 1))) + 1;
 }
 
-export const bent_identity_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "bent_identity",
     label: "bent identity",
     priority_luck: 10,

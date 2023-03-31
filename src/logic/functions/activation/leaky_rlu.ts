@@ -19,7 +19,7 @@ export function leaky_rectified_linear_unit_derivate(z: number, alpha: number = 
     return z >= 0 ? 1 : alpha;
 }
 
-export const leaky_rectified_linear_unit_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "leaky_rectified_linear_unit",
     label: "leaky-rlu",
     priority_luck: 3,

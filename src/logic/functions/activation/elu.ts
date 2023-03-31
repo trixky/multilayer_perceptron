@@ -19,7 +19,7 @@ export function exponential_linear_unit_derivate(z: number, alpha: number = Conf
     return z >= 0 ? 1 : alpha * Math.exp(z);
 }
 
-export const exponential_linear_unit_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "exponential_linear_unit",
     label: "elu",
     priority_luck: 3,

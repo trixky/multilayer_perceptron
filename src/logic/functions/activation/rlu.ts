@@ -19,7 +19,7 @@ export function rectified_linear_unit_derivate(z: number): number {
 // Sources:
 // https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/
 
-export const rectified_linear_unit_bundle = <FunctionModel>{
+export default <FunctionModel>{
     id: "rectified_linear_unit",
     label: "rlu",
     priority_luck: 3,
