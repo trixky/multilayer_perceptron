@@ -234,10 +234,9 @@ export default class Model {
         // compute the outputs
         this.output_layer.perceptrons.forEach(perceptron => {
             const weighed_inputs = perceptron.weights.map((weight, weight_index) => weight * inputs[weight_index]).reduce((a, b) => a + b, 0)
-            // const bias = perceptron.bias
+            const bias = perceptron.bias
 
-            perceptron.output = weighed_inputs
-            // perceptron.output = weighed_inputs + bias
+            perceptron.output = weighed_inputs + bias
         })
 
         const unactivated_outputs = this.output_layer.perceptrons.map(perceptron => perceptron.output)
@@ -345,7 +344,7 @@ export default class Model {
             });
 
             // ------- bias
-            // this.output_layer.perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.output_layer[perceptron_index][learned_weights.output_layer[perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
+            this.output_layer.perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.output_layer[perceptron_index][learned_weights.output_layer[perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
         })
 
         // ----------------------- Hidden layers
@@ -359,7 +358,7 @@ export default class Model {
                 });
 
                 // ------- bias
-                // this.hidden_layers[hidden_layer_index].perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.hidden_layers[hidden_layer_index][perceptron_index][learned_weights.hidden_layers[hidden_layer_index][perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
+                this.hidden_layers[hidden_layer_index].perceptrons[perceptron_index].bias = this.learned_weights.map(learned_weights => learned_weights.hidden_layers[hidden_layer_index][perceptron_index][learned_weights.hidden_layers[hidden_layer_index][perceptron_index].length - 1]).reduce((a, b) => a + b) / (this.learned_weights.length - 1)
             }))
     }
 }
