@@ -21,7 +21,7 @@ export function exponential_linear_unit_derivate(z: number, alpha: number = Conf
 
 export const exponential_linear_unit_bundle = <FunctionModel>{
     id: "exponential_linear_unit",
-    label: "exponential linear unit",
+    label: "elu",
     priority_luck: 3,
     activation: exponential_linear_unit,
     derivative: exponential_linear_unit_derivate,

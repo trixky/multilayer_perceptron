@@ -11,8 +11,8 @@ export function bent_identity_derivate(z: number): number {
 }
 
 export const bent_identity_bundle = <FunctionModel>{
-    id: "bent_identity_bundle",
-    label: "bent identity bundle",
+    id: "bent_identity",
+    label: "bent identity",
     priority_luck: 10,
     activation: bent_identity,
     derivative: bent_identity_derivate,

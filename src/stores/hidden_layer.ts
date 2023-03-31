@@ -92,9 +92,9 @@ function create_hidden_layer_caracteristic_store() {
             update(hidden_layers => {
                 if (index < hidden_layers.length && hidden_layers[index].function != null) {
                     const function_bundles_keys = Object.keys(FunctionBundles)
-                    const function_index = function_bundles_keys.findIndex(function_bundle => function_bundle === hidden_layers[index].function.name)
+                    const function_index = function_bundles_keys.findIndex(function_bundle => function_bundle === hidden_layers[index].function.id)
                     const new_function_index = (function_index + 1) % function_bundles_keys.length
-
+                    
                     hidden_layers[index].function = FunctionBundles[function_bundles_keys[new_function_index] as FunctionBundleTypes]
                 }
 

@@ -19,7 +19,7 @@ export function hyperbolic_tangent_derivate(z: number): number {
 
 export const hyperbolic_tangent_bundle = <FunctionModel>{
     id: "hyperbolic_tangent",
-    label: "hyperbolic tangent",
+    label: "hyperbolic",
     priority_luck: 3,
     activation: hyperbolic_tangent,
     derivative: hyperbolic_tangent_derivate,

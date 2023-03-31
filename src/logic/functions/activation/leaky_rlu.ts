@@ -20,8 +20,8 @@ export function leaky_rectified_linear_unit_derivate(z: number, alpha: number = 
 }
 
 export const leaky_rectified_linear_unit_bundle = <FunctionModel>{
-    id: "leaky rectified linear unit",
-    label: "leaky_rectified_linear_unit",
+    id: "leaky_rectified_linear_unit",
+    label: "leaky-rlu",
     priority_luck: 3,
     activation: leaky_rectified_linear_unit,
     derivative: leaky_rectified_linear_unit_derivate,
