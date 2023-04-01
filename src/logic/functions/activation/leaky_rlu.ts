@@ -19,14 +19,25 @@ export function leaky_rectified_linear_unit_derivate(z: number, alpha: number = 
     return z >= 0 ? 1 : alpha;
 }
 
+const max_start_learning_rate_recommendation = 0.5
+const max_final_learning_rate_recommendation = 0.05
+
 const description = `One advantage of Leaky ReLU over the standard Rectified Linear Unit (ReLU) activation function is that it addresses the "dying ReLU" problem, which can occur when the gradient of the ReLU function becomes zero, causing neurons to stop learning.
 
-One benefit of the Leaky ReLU activation function is that it allows for the learning of negative values, which can be important in certain types of problems. It also addresses the "dying ReLU" problem by introducing a small non-zero slope for negative values, which allows the neuron to continue learning even when the input is negative.`
+One benefit of the Leaky ReLU activation function is that it allows for the learning of negative values, which can be important in certain types of problems. It also addresses the "dying ReLU" problem by introducing a small non-zero slope for negative values, which allows the neuron to continue learning even when the input is negative.
+
+It is recommended to use a learning rate that starts below ${max_start_learning_rate_recommendation.toString()} and ends below ${max_final_learning_rate_recommendation.toString()}.`
 
 export default <FunctionBundleModel>{
     id: "leaky_rectified_linear_unit",
     label: "leaky-rlu",
     description,
+    recommendation: {
+        max_learning_rate: {
+            start: max_start_learning_rate_recommendation,
+            final: max_final_learning_rate_recommendation
+        },
+    },
     activation: leaky_rectified_linear_unit,
     derivative: leaky_rectified_linear_unit_derivate,
 }

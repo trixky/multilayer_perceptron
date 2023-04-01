@@ -60,7 +60,7 @@ export default {
                 step: 1,
             },
             slope: {
-                default: 0.2,
+                default: 0.01,
                 min: 0,
                 max: 1,
                 step: 0.01,
@@ -74,15 +74,15 @@ export default {
         },
         learning_rate: {
             start: {
-                default: 0.7,
-                min: 0.05,
+                default: 0.75,
+                min: 0,
                 max: 3,
                 step: 0.05,
             },
             end: {
-                default: 0.5,
-                min: 0.05,
-                max: 3,
+                default: 0.1,
+                min: 0,
+                max: 1,
                 step: 0.05,
             },
             bias: {
