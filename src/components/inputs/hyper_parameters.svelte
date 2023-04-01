@@ -6,6 +6,10 @@
 	import EpochStore from '../../stores/epoch';
 	import TrainTestRatio from '../../stores/train_test_ratio';
 	import ProgressStore from '../../stores/progress';
+	import MaxLearningRateStore from '../../stores/max_learning_rate';
+
+	$: learning_rate_start_too_big = $LearningRateStartStore > $MaxLearningRateStore.start;
+	$: learning_rate_final_too_big = $LearningRateEndStore > $MaxLearningRateStore.final;
 
 	function handle_range_learning_rate(e: any) {
 		LearningRateStartStore.set(+e.target.value);
@@ -38,7 +42,15 @@
 				value={$LearningRateStartStore}
 				disabled={$ProgressStore}
 			/>
-			<p class="value">x {$LearningRateStartStore.toFixed(2)}</p>
+			<p
+				class="value"
+				class:warning={learning_rate_start_too_big}
+				title={learning_rate_start_too_big
+					? `Maximum recommendation: ${$MaxLearningRateStore.start}`
+					: undefined}
+			>
+				x {$LearningRateStartStore.toFixed(2)}
+			</p>
 			<p class="label">learning rate</p>
 		</div>
 		<div class="input-container">
@@ -51,7 +63,15 @@
 				value={$LearningRateEndStore}
 				disabled={$ProgressStore}
 			/>
-			<p class="value">x {$LearningRateEndStore.toFixed(2)}</p>
+			<p
+				class="value"
+				class:warning={learning_rate_final_too_big}
+				title={learning_rate_final_too_big
+					? `Maximum recommendation: ${$MaxLearningRateStore.final}`
+					: undefined}
+			>
+				x {$LearningRateEndStore.toFixed(2)}
+			</p>
 			<p class="label">final learning rate</p>
 		</div>
 		<div class="input-container">
@@ -113,6 +133,10 @@
 		@apply w-10 h-fit text-center;
 	}
 
+	.input-container > p.value.warning {
+		@apply text-red-500;
+	}
+
 	input[type='range'] {
 		@apply w-40 mx-3 my-3 -translate-y-[2px] transition-all duration-150 opacity-40;
 		-webkit-appearance: none;
@@ -127,7 +151,7 @@
 		height: 16px;
 	}
 
-    input[type='range']:disabled {
+	input[type='range']:disabled {
 		@apply cursor-not-allowed opacity-10;
 	}
 </style>
