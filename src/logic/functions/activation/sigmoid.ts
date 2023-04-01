@@ -1,4 +1,4 @@
-import type FunctionModel from "../../../models/function";
+import type FunctionBundleModel from "../../../models/function_bundle";
 
 // sigmoid implements the sigmoid activation function
 export function sigmoid(z: number) {
@@ -18,10 +18,16 @@ export function sigmoid_derivate(z: number): number {
     return z * (1 - z)
 }
 
-export default <FunctionModel>{
+const description = `One advantage of sigmoid over some other activation functions such as ReLU or Leaky ReLU is that it produces an output that is bounded between 0 and 1, which can be useful in certain types of problems.
+
+One benefit of the sigmoid activation function is that it can be helpful in problems where the output needs to be in a specific range, such as binary classification problems where the output needs to be either 0 or 1. Sigmoid can also be useful in problems where the output needs to be interpreted as a probability.
+
+However, there are some potential drawbacks to using the sigmoid activation function. One issue is that the output of the sigmoid function saturates for large positive or negative values of x, which can cause gradients to become very small during backpropagation, leading to slow learning and potentially causing the model to get stuck in a local minimum. Additionally, the output of the sigmoid function is not centered around zero, which can make it difficult to train deep neural networks.`
+
+export default <FunctionBundleModel>{
     id: "sigmoid",
     label: "sigmoid",
-    priority_luck: 100,
+    description,
     activation: sigmoid,
     derivative: sigmoid_derivate,
 }

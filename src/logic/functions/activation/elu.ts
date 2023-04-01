@@ -1,4 +1,4 @@
-import type FunctionModel from "../../../models/function";
+import type FunctionBundleModel from "../../../models/function_bundle";
 import Config from '../../../config'
 
 // exponential_linear_unit implements the exponential linear unit tangent activation function
@@ -19,10 +19,14 @@ export function exponential_linear_unit_derivate(z: number, alpha: number = Conf
     return z >= 0 ? 1 : alpha * Math.exp(z);
 }
 
-export default <FunctionModel>{
+const description = `One advantage of ELU over some other activation functions is that it reduces the vanishing gradient problem, which can occur when using activation functions such as the sigmoid or hyperbolic tangent.
+
+One benefit of the ELU activation function is that it can produce negative values, which can help the model learn more complex and nuanced relationships between inputs and outputs. Additionally, the exponential function in ELU can help speed up the training process by encouraging the model to focus on the most informative features of the data.`
+
+export default <FunctionBundleModel>{
     id: "exponential_linear_unit",
     label: "elu",
-    priority_luck: 3,
+    description,
     activation: exponential_linear_unit,
     derivative: exponential_linear_unit_derivate,
 }

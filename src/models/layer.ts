@@ -1,5 +1,5 @@
 import type PerceptronModel from "./perceptron"
-import type FunctionModel from './function'
+import type FunctionModel from './function_bundle'
 
 export interface LayerCaracteristics {
     size: number,

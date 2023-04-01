@@ -79,7 +79,7 @@
 		</div>
 		<div class="hidden-layer-caracteristic-input">
 			{#if caracterisics != undefined || output_layer}
-				<p class="function">
+				<p class="function" title={caracterisics != undefined ? caracterisics.function.description : Config.inputs.output_layer.function.default.description}>
 					{caracterisics != undefined ? caracterisics.function.label : Config.inputs.output_layer.function.default.label}
 				</p>
 				<div class="hidden-layer-caracteristic-input-modificator">

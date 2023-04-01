@@ -1,4 +1,4 @@
-import type FunctionModel from "../../../models/function";
+import type FunctionBundleModel from "../../../models/function_bundle";
 
 import Config from "../../../config"
 
@@ -19,10 +19,14 @@ export function leaky_rectified_linear_unit_derivate(z: number, alpha: number = 
     return z >= 0 ? 1 : alpha;
 }
 
-export default <FunctionModel>{
+const description = `One advantage of Leaky ReLU over the standard Rectified Linear Unit (ReLU) activation function is that it addresses the "dying ReLU" problem, which can occur when the gradient of the ReLU function becomes zero, causing neurons to stop learning.
+
+One benefit of the Leaky ReLU activation function is that it allows for the learning of negative values, which can be important in certain types of problems. It also addresses the "dying ReLU" problem by introducing a small non-zero slope for negative values, which allows the neuron to continue learning even when the input is negative.`
+
+export default <FunctionBundleModel>{
     id: "leaky_rectified_linear_unit",
     label: "leaky-rlu",
-    priority_luck: 3,
+    description,
     activation: leaky_rectified_linear_unit,
     derivative: leaky_rectified_linear_unit_derivate,
 }

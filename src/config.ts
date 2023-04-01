@@ -1,5 +1,5 @@
 import type { bundle_types as FunctionBundleTypes } from './logic/functions/activation/bundles'
-import { softmax } from './logic/functions/error/softmax'
+import { softmax, description as softmax_description } from './logic/functions/error/softmax'
 
 const DATASET_SIZE = 569
 
@@ -47,6 +47,7 @@ export default {
                 default: {
                     label: "softmax",
                     function: softmax,
+                    description: softmax_description,
                 }
             }
         },
