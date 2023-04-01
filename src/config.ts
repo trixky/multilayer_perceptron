@@ -59,13 +59,13 @@ export default {
                 step: 1,
             },
             slope: {
-                default: 0.5,
+                default: 0.2,
                 min: 0,
                 max: 1,
                 step: 0.01,
             },
             scaling_factor: {
-                default: 0.5,
+                default: 0.2,
                 min: 0,
                 max: 1,
                 step: 0.01,
@@ -106,6 +106,7 @@ export default {
                 malignant: 'FP', // true positive
                 benign: 'FN' // true negative
             },
+            global_accuracy: "Global accuracy"
         },
         colors: {
             global_accuracy: {

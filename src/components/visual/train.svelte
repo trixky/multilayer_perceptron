@@ -29,8 +29,6 @@
 		LineElement
 	);
 
-	const NO_LABEL = "without-label"
-
 	let chart: any = undefined;
 
 	function reset_datasets() {
@@ -64,7 +62,7 @@
 				yAxisID: 'y'
 			},
 			{
-				label: NO_LABEL,
+				label: Config.visuals.labels.global_accuracy,
 				data: <Array<number>>[],
 				borderColor: Config.visuals.colors.global_accuracy.default,
 				backgroundColor: Config.visuals.colors.global_accuracy.background,
@@ -154,8 +152,8 @@
 			scales: {
 				x: {
 					title: {
-						text: "epochs",
-						display: true,
+						text: 'epochs',
+						display: true
 					},
 					type: 'linear',
 					min: 0,
@@ -185,9 +183,9 @@
 				},
 				y: {
 					title: {
-						text: "patients",
+						text: 'patients',
 						display: true,
-						padding: 10,
+						padding: 10
 					},
 					type: 'linear',
 					display: true,
@@ -200,9 +198,9 @@
 				},
 				y1: {
 					title: {
-						text: "global accuracy (%)",
+						text: 'global accuracy (%)',
 						display: true,
-						padding: 10,
+						padding: 10
 					},
 					type: 'linear',
 					display: true,
@@ -223,10 +221,10 @@
 						padding: 20,
 						filter: function (item) {
 							// Remove the "no label" labels
-							return !item.text.includes(NO_LABEL);
-						},
+							return !item.text.includes(Config.visuals.labels.global_accuracy);
+						}
 					},
-					position: "top",
+					position: 'top',
 					title: {
 						font: {
 							size: 15
