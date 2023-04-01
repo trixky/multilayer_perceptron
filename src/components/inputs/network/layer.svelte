@@ -164,7 +164,7 @@
 	}
 
 	.hidden-layer-caracteristic-input > .function {
-		@apply w-[94px];
+		@apply w-[94px] cursor-help;
 	}
 
 	.hidden-layer-caracteristic-input-modificator {
