@@ -88,7 +88,7 @@
 <!-- ======================================== STYLE -->
 <style lang="postcss">
 	.predict-container {
-		@apply flex flex-col items-center w-full m-auto my-3;
+		@apply flex flex-col items-center w-full m-auto mt-3 mb-16;
 	}
 
 	h2 {
