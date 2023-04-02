@@ -241,6 +241,6 @@
 <!-- ======================================== STYLE -->
 <style lang="postcss">
 	.visual-pie-container {
-		@apply my-4;
+		@apply my-2;
 	}
 </style>

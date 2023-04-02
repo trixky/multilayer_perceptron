@@ -32,7 +32,7 @@
 <!-- ======================================== CONTENT -->
 <div class="export-container">
 	<button
-		class="classic-button"
+		class="classic-button export-button"
 		on:click={handle_export}
 		disabled={$ModelStore == null || $ProgressStore}>export</button
 	>
@@ -42,5 +42,9 @@
 <style lang="postcss">
 	.export-container {
 		@apply relative flex flex-col m-auto w-full;
+	}
+	
+	.export-button {
+		@apply mt-3;
 	}
 </style>

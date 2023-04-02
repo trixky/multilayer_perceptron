@@ -94,27 +94,12 @@
 			(fowrward pass) on the shuffled patients of the training dataset. By comparaing the results of
 			each patients with the expected ones, an error is computed. Attributes of the model are
 			corrected (error back-propagation) to fit a little more with these expected results (backward
-			pass) according to these errors. This process repeated x time as an epoch.
+			pass) according to these errors. This process is repeated x time (epochs).
 		</p>
 	</div>
-	<button class="classic-button" on:click={handle_run} disabled={$ProgressStore}>train</button>
-	<div class="text-container">
-		<p class="right">
-			The training phase initialize a model with random attributes.<br />The model is tested
-			(fowrward pass) on the shuffled patients of the training dataset. By comparaing the results of
-			each patients with the expected ones, an error is computed. Attributes of the model are
-			corrected (error back-propagation) to fit a little more with these expected results (backward
-			pass) according to these errors. This process repeated x time as an epoch.
-		</p>
-	</div>
+	<button class="classic-button train-button" on:click={handle_run} disabled={$ProgressStore}>train</button>
 	<TrainVisual />
 	<Export />
-	<div class="text-container">
-		<p class="left">
-			You can export the model with its attributes (layers, weights, bias, hyper-parameters), and
-			import it later.
-		</p>
-	</div>
 </div>
 
 <!-- ======================================== STYLE -->
@@ -129,5 +114,9 @@
 
 	.progression-percentage {
 		@apply w-12 text-sm text-right opacity-25;
+	}
+
+	.train-button {
+		@apply mt-4;
 	}
 </style>
