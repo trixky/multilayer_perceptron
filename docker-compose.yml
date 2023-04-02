@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  client:
+    build:
+      # dev
+      context: ./
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./src:/multilayer_perceptron/src
+      - ./static:/multilayer_perceptron/static
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped

@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  client:
+    build:
+      # prod
+      context: ./
+      dockerfile: ./Dockerfile.prod
+    ports:
+      - "${PORT}:80"
+    restart: unless-stopped
