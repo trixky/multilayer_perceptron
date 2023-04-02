@@ -8,7 +8,7 @@
 
 	let ctx: any = undefined;
 
-	$: neurons_nbr = $HiddenLayerStore.reduce((sum, hidden_layer) => sum + hidden_layer.size, 0) + Config.inputs.input_layer.size.default + Config.inputs.output_layer.size.default;
+	$: neurons_nbr = $HiddenLayerStore.reduce((sum, hidden_layer) => sum + hidden_layer.size, 0) + Config.inputs.output_layer.size.default;
 
 	const input_layer = <LayerCaracteristicsModel>{
 		size: Config.inputs.input_layer.size.default
