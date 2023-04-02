@@ -5,7 +5,7 @@ The goal is to train an AI model to predict whether a cancer is malignant or ben
 
 Dataset describe the (30) characteristics of a cell nucleus of breast mass extracted with fine-needle aspiration (FNA) on 569 patients.
 
-<img src="https://github.com/trixky/gpgm/blob/main/.demo/screenshots.gif" alt="Demo gif" width="400"/>
+<img src="https://github.com/trixky/multilayer_perceptron/blob/main/.demo/screenshots.gif" alt="Demo gif" width="400"/>
 
 ## Prerequisites
 
