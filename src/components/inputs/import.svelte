@@ -61,7 +61,6 @@
 			if ($ModelStore == null)
 				$ModelStore = new Model(
 					backup_model.hidden_layer_caracteristics,
-					backup_model.output_layer_caracteristics
 				);
 			$ModelStore?.import(backup_model);
 

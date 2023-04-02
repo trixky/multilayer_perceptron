@@ -84,6 +84,7 @@
 				</p>
 				<div class="hidden-layer-caracteristic-input-modificator">
 					<button
+						class:hidden={caracterisics == undefined}
 						class="icon-button modificator-button"
 						on:click={() => {
 							handle_change_function(index);
