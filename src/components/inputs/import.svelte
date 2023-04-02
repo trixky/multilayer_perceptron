@@ -5,14 +5,14 @@
 	import ModelStore from '../../stores/model';
 	import type BackupModel from '../../models/backup';
 	import Model from '../../logic/model';
-    import PatientStore from '../../stores/patient'
-    import TrainTestRatioStore from '../../stores/train_test_ratio'
-    import PredictionStore from '../../stores/prediction'
-    import Parser from '../../logic/parser'
+	import PatientStore from '../../stores/patient';
+	import TrainTestRatioStore from '../../stores/train_test_ratio';
+	import PredictionStore from '../../stores/prediction';
+	import Parser from '../../logic/parser';
 
 	const INPUT_FILE_ID = 'input-file-id';
 
-    function predict() {
+	function predict() {
 		if ($ModelStore != null) {
 			const prediction_patients = $PatientStore.slice(
 				0,
@@ -55,16 +55,19 @@
 		if (file == null) return; // If user cancels file selection
 
 		try {
+			console.log('---- 1');
 			const backup_file: string = await file.text();
+			console.log('---- 2');
 			const backup_model: BackupModel = JSON.parse(backup_file) as BackupModel;
+			console.log('---- 3');
 
-			if ($ModelStore == null)
-				$ModelStore = new Model(
-					backup_model.hidden_layer_caracteristics,
-				);
+			if ($ModelStore == null) console.log('---- 4');
+			$ModelStore = new Model(backup_model.hidden_layer_caracteristics);
+			console.log('---- 5');
 			$ModelStore?.import(backup_model);
+			console.log('---- 6');
 
-            handle_predict()
+			handle_predict();
 		} catch (e) {
 			alert('backup file corrupted');
 		}

@@ -154,8 +154,8 @@ export default {
     },
     backup: {
         file: {
-            name: "backup",
-            extension: ".model.json"
+            name: "model",
+            extension: ".json"
         }
     }
 }

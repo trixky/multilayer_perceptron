@@ -3,12 +3,13 @@ import type { LayerCaracteristics as LayerCaracteristicsModel } from '../models/
 import type PerceptronModel from "../models/perceptron";
 import type PatientModel from "../models/patient";
 import Config from '../config'
-import SigmoidBundle from "./functions/activation/sigmoid";
 import { softmax } from "./functions/error/softmax";
 import { binary_cross_entropy_wrt_softmax_input_derivate } from "./functions/error/bce";
 import type AccuracyModel from "../models/accuracy";
 import type WeightModel from '../models/weight'
 import type ModelBackupModel from '../models/backup'
+import {bundles as FunctionBundles} from "../logic/functions/activation/bundles";
+import type {bundle_types as BundleTypes} from "../logic/functions/activation/bundles";
 
 export default class Model {
     private hidden_layer_caracteristics: Array<LayerCaracteristicsModel>
@@ -104,6 +105,12 @@ export default class Model {
         this.hidden_layers = model_backup.hidden_layers
         this.output_layer = model_backup.output_layer
         this.learned_weights = model_backup.learned_weights
+
+        this.hidden_layer_caracteristics.forEach(hidden_layer_caracteristic => {
+            // For each loaded hidden layer
+            // Load the function bundle to retrieve the activation and derivation function from the function id
+            hidden_layer_caracteristic.function = FunctionBundles[<BundleTypes>hidden_layer_caracteristic.function.id]
+        })
     }
 
     // =========================================================== Getter / Setter
