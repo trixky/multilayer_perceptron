@@ -10,6 +10,6 @@
 <!-- ======================================== STYLE -->
 <style lang="postcss">
 	header {
-		@apply text-center py-8;
+		@apply text-center py-10 mb-2;
 	}
 </style>
