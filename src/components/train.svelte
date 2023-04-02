@@ -43,8 +43,6 @@
 					Math.floor(($PatientStore.length * $TrainTestRatioStore) / 100)
 				);
 
-				console.log($HiddenLayerCaracteristicStore)
-
 				// Initialize model
 				ModelStore.reset();
 				const model = new ModelClass(

@@ -55,17 +55,11 @@
 		if (file == null) return; // If user cancels file selection
 
 		try {
-			console.log('---- 1');
 			const backup_file: string = await file.text();
-			console.log('---- 2');
 			const backup_model: BackupModel = JSON.parse(backup_file) as BackupModel;
-			console.log('---- 3');
 
-			if ($ModelStore == null) console.log('---- 4');
-			$ModelStore = new Model(backup_model.hidden_layer_caracteristics);
-			console.log('---- 5');
+			if ($ModelStore == null) $ModelStore = new Model(backup_model.hidden_layer_caracteristics);
 			$ModelStore?.import(backup_model);
-			console.log('---- 6');
 
 			handle_predict();
 		} catch (e) {
