@@ -53,9 +53,10 @@
 
 <!-- ======================================== CONTENT -->
 <div class="visual-pie-container">
-	<Doughnut
+		<!-- style="width: 260px; margin-top: -30px; margin-bottom: -30px;" -->
+		<Doughnut
 		{data}
-		style="width: 260px; margin-top: -30px; margin-bottom: -30px;"
+		style="width: 260px;"
 		options={{
 			responsive: false,
 			animation: {
@@ -69,7 +70,7 @@
 						boxHeight: 18,
 						padding: 20
 					},
-					position: 'right',
+					position: 'bottom',
 					title: {
 						font: {
 							size: 15

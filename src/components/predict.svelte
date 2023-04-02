@@ -11,7 +11,7 @@
 	import Import from '../components/inputs/import.svelte';
 	import Parser from '../logic/parser';
 
-	const GLOBAL_ACCURACY_OFF = 0
+	const GLOBAL_ACCURACY_OFF = 0;
 
 	const global_accuracy = tweened(GLOBAL_ACCURACY_OFF, {
 		duration: 400,
@@ -19,9 +19,9 @@
 	});
 
 	$: if ($PredictionStore != null && $PredictionStore.mean != $global_accuracy) {
-		global_accuracy.set($PredictionStore.mean)
+		global_accuracy.set($PredictionStore.mean);
 	} else if ($PredictionStore == null && $global_accuracy != 0) {
-		global_accuracy.set(GLOBAL_ACCURACY_OFF)
+		global_accuracy.set(GLOBAL_ACCURACY_OFF);
 	}
 
 	function predict() {
@@ -63,32 +63,32 @@
 <!-- ======================================== CONTENT -->
 <div class="predict-container">
 	<h2>Prediction</h2>
+		<Import />
 	<div class="text-container">
 		<p class="right">
-			The training phase use the trained model.<br />The model is tested (fowrward pass) on the
-			shuffled patients of the testing dataset. By comparaing the results of each patients with the
-			expected ones.
+			The prediction use the trained model.<br />The model is tested (fowrward pass) on the shuffled
+			patients of the testing dataset. By comparaing the results of each patients with the expected
+			ones.
 		</p>
 	</div>
-	<div class="button-container">
-		<Import />
-		<button
-		class="classic-button"
+	<button
+		class="classic-button predict-button"
 		on:click={handle_predict}
 		disabled={$ModelStore == null || $ProgressStore || $PredictionStore != null}>predict</button
-		>
-	</div>
+	>
+	<PredictVisual />
 	<div class="global-accuracy-container">
 		<p class="global-accuracy-label">Global accuracy:</p>
-		<p class="global-accuracy-value" class:opacity-20={$global_accuracy <= 0.01}>{($global_accuracy * 100).toFixed(2)} %</p>
+		<p class="global-accuracy-value" class:opacity-20={$global_accuracy <= 0.01}>
+			{($global_accuracy * 100).toFixed(2)} %
+		</p>
 	</div>
-	<PredictVisual />
 </div>
 
 <!-- ======================================== STYLE -->
 <style lang="postcss">
 	.predict-container {
-		@apply flex flex-col items-center w-full m-auto mt-3 mb-16;
+		@apply flex flex-col items-center w-full m-auto mt-3 mb-6;
 	}
 
 	h2 {
@@ -100,15 +100,15 @@
 		width: 400px;
 	}
 
-	.button-container {
-		@apply my-2;
-	}
-
 	.global-accuracy-container {
 		@apply flex my-5 text-sm;
 	}
 
 	.global-accuracy-value {
 		@apply w-14 text-right transition-all duration-150;
+	}
+
+	.predict-button {
+		@apply mt-1 mb-7;
 	}
 </style>

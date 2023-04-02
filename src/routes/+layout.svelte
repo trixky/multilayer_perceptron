@@ -13,6 +13,6 @@
 <!-- ======================================== STYLE -->
 <style lang="postcss">
     main {
-        @apply flex flex-col justify-center p-3 w-fit m-auto;
+        @apply flex flex-col justify-center py-3 px-6 w-fit mx-auto;
     }
 </style>
