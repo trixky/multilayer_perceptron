@@ -1,5 +1,7 @@
 <!-- ======================================== SCRIPT -->
 <script lang="ts">
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
 	import ModelStore from '../stores/model';
 	import PredictVisual from './visual/predict.svelte';
 	import ProgressStore from '../stores/progress';
@@ -8,6 +10,19 @@
 	import TrainTestRatioStore from '../stores/train_test_ratio';
 	import Import from '../components/inputs/import.svelte';
 	import Parser from '../logic/parser';
+
+	const GLOBAL_ACCURACY_OFF = 0
+
+	const global_accuracy = tweened(GLOBAL_ACCURACY_OFF, {
+		duration: 400,
+		easing: cubicOut
+	});
+
+	$: if ($PredictionStore != null && $PredictionStore.mean != $global_accuracy) {
+		global_accuracy.set($PredictionStore.mean)
+	} else if ($PredictionStore == null && $global_accuracy != 0) {
+		global_accuracy.set(GLOBAL_ACCURACY_OFF)
+	}
 
 	function predict() {
 		if ($ModelStore != null) {
@@ -62,6 +77,10 @@
 		disabled={$ModelStore == null || $ProgressStore || $PredictionStore != null}>predict</button
 	>
 	<PredictVisual />
+	<div class="global-accuracy-container">
+		<p class="global-accuracy-label">Global accuracy:</p>
+		<p class="global-accuracy-value" class:opacity-20={$global_accuracy <= 0.01}>{($global_accuracy * 100).toFixed(2)} %</p>
+	</div>
 </div>
 
 <!-- ======================================== STYLE -->
@@ -77,5 +96,13 @@
 	.text-container {
 		@apply text-sm my-3;
 		width: 400px;
+	}
+
+	.global-accuracy-container {
+		@apply flex text-sm;
+	}
+
+	.global-accuracy-value {
+		@apply w-14 text-right transition-all duration-150;
 	}
 </style>
